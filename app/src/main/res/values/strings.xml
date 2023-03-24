@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CinemaLab</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="sign_in">Войти</string>
+    <string name="registration">Регистрация</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="description_logo">logo</string>
 </resources>
