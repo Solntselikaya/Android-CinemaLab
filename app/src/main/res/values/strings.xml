@@ -7,4 +7,9 @@
     <string name="e_mail">E-mail</string>
     <string name="password">Пароль</string>
     <string name="description_logo">logo</string>
+    <string name="do_registration">Зарегистрироваться</string>
+    <string name="already_have_account">У меня уже есть аккаунт</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="repeat_password">Повторите пароль</string>
 </resources>

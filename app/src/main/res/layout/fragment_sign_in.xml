@@ -10,18 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:progressTint="@color/orange"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone" />
-
-    <TextView
-        android:id="@+id/errorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +18,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="60dp"
@@ -44,34 +32,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/etEmail"
+        style="@style/Theme.CinemaLab.body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/style_field_stroke"
+        android:autofillHints="emailAddress"
         android:ems="10"
-        android:fontFamily="@font/roboto_regular"
         android:hint="@string/e_mail"
         android:inputType="textEmailAddress"
         android:paddingVertical="13dp"
         android:paddingStart="16dp"
-        android:textColor="@color/gray"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+        android:textColor="@color/orange"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="emailAddress" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/etPassword"
+        style="@style/Theme.CinemaLab.body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="106dp"
+        android:autofillHints="password"
         android:background="@drawable/style_field_stroke"
         android:ems="10"
         android:fontFamily="@font/roboto_regular"
@@ -79,41 +69,40 @@
         android:inputType="textPassword"
         android:paddingVertical="13dp"
         android:paddingStart="16dp"
-        android:textColor="@color/gray"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textColor="@color/orange"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btSignIn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="password" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btSignIn"
+        style="@style/Theme.CinemaLab.button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/style_button_filled"
-        android:fontFamily="@font/roboto_bold"
         android:paddingVertical="13dp"
         android:text="@string/sign_in"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btRegistration"
+        style="@style/Theme.CinemaLab.button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/style_field_stroke"
-        android:fontFamily="@font/roboto_bold"
         android:paddingVertical="13dp"
         android:text="@string/registration"
         android:textAlignment="center"
@@ -129,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="editTextTextEmailAddress,button,editTextTextPassword,button2"
+        app:constraint_referenced_ids="etEmail,btSignIn,etPassword,btRegistration"
         tools:layout_editor_absoluteX="141dp"
         tools:layout_editor_absoluteY="323dp" />
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text styles-->
+    <style
+        name="Theme.CinemaLab.body1"
+        parent="Theme.CinemaLab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Theme.CinemaLab.body2"
+        parent="Theme.CinemaLab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Theme.CinemaLab.button"
+        parent="Theme.CinemaLab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+</resources>
