@@ -12,4 +12,7 @@
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="repeat_password">Повторите пароль</string>
+    <string name="input_incorrect">Введенные данные неверны</string>
+    <string name="fill_all_fields">Заполните все поля</string>
+    <string name="invalid_email_error_message">\nНекорректный e-mail</string>
 </resources>
