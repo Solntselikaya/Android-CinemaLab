@@ -31,7 +31,7 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    private fun createErrorDialog() {
+    private fun showErrorDialog() {
         val message = viewModel.validationErrorMessage.value
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
 
@@ -44,8 +44,8 @@ class SignInFragment : Fragment() {
     }
 
     private fun setOnButtonsClickListeners() {
-        setOnRegistrationButtonClickListener()
         setOnSignInButtonClickListener()
+        setOnRegistrationButtonClickListener()
     }
 
     private fun setOnSignInButtonClickListener() {
@@ -59,7 +59,7 @@ class SignInFragment : Fragment() {
             )
 
             if (viewModel.allFieldsIsValid.value == false)
-                createErrorDialog()
+                showErrorDialog()
             else
                 viewModel.login(email, password)
         }

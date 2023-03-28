@@ -37,10 +37,10 @@ class SignInViewModel @Inject constructor(
         if (email.isBlank() || password.isBlank()) {
             _validationErrorMessage.value += context.getString(R.string.fill_all_fields)
         }
-        _allFieldsIsValid.value = checkIfEmailIsValid(email) && password.isNotBlank()
+        _allFieldsIsValid.value = isEmailValid(email) && password.isNotBlank()
     }
 
-    private fun checkIfEmailIsValid(email: String): Boolean {
+    private fun isEmailValid(email: String): Boolean {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
             _validationErrorMessage.value += context.getString(R.string.invalid_email_error_message)
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()

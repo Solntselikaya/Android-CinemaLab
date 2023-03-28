@@ -12,7 +12,11 @@
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="repeat_password">Повторите пароль</string>
-    <string name="input_incorrect">Введенные данные неверны</string>
+    <string name="input_incorrect">Ошибка</string>
     <string name="fill_all_fields">Заполните все поля</string>
     <string name="invalid_email_error_message">\nНекорректный e-mail</string>
+    <string name="passwords_are_not_equel">Пароли не совпадают</string>
+    <string name="error_something_went_wrong">Что-то пошло не так</string>
+    <string name="error_user_already_exists">Почта уже занята</string>
+    <string name="exception_http_409">HTTP 409 Conflict</string>
 </resources>
