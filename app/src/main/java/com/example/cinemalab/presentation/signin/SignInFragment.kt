@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentSignInBinding
@@ -27,18 +29,42 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.bind(view)
 
         setOnButtonsClickListeners()
+        val stateObserver = Observer<SignInViewModel.SignInState> { newState ->
+            when(newState) {
+                SignInViewModel.SignInState.Initial -> {
+                    binding.progressBar.isVisible = false
+                    binding.btSignIn.isEnabled = true
+                    binding.btRegistration.isEnabled = true
+                }
+                SignInViewModel.SignInState.Loading -> showLoading()
+                is SignInViewModel.SignInState.Failure -> {
+                    binding.progressBar.isVisible = false
+                    showErrorDialog(newState.errorMessage)
+                }
+                is SignInViewModel.SignInState.Success -> {
+                    binding.progressBar.isVisible = false
+                    navigateToMainScreen()
+                }
+            }
+        }
+        viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
     }
 
-    private fun showErrorDialog() {
-        val message = viewModel.validationErrorMessage.value
+    private fun showLoading() {
+        binding.progressBar.isVisible = true
+        binding.btSignIn.isEnabled = false
+        binding.btRegistration.isEnabled = false
+    }
+
+    private fun showErrorDialog(message: String) {
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
 
         builder.setTitle(getString(R.string.input_incorrect))
         builder.setMessage(message)
         builder.setOnDismissListener {
-            viewModel.clearErrorMessage()
+            viewModel.exitAlertDialog()
         }
         builder.show()
     }
@@ -58,9 +84,7 @@ class SignInFragment : Fragment() {
                 password
             )
 
-            if (viewModel.allFieldsIsValid.value == false)
-                showErrorDialog()
-            else
+            if (viewModel.allFieldsIsValid.value == true)
                 viewModel.login(email, password)
         }
     }
@@ -73,6 +97,10 @@ class SignInFragment : Fragment() {
 
     private fun navigateToSignUpScreen() {
         findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+    }
+
+    private fun navigateToMainScreen() {
+        findNavController().navigate(R.id.action_signInFragment_to_bottomNavBarFragment)
     }
 
 }
