@@ -10,6 +10,7 @@ import com.example.cinemalab.R
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.LoginDto
 import com.example.cinemalab.domain.usecase.LoginUseCase
+import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import com.example.cinemalab.presentation.signup.SignUpViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -71,6 +72,10 @@ class SignInViewModel @Inject constructor(
             _state.value = SignInState.Loading
             try {
                 val token = loginUseCase(body)
+
+                val saveTokenUseCase = SaveTokenUseCase(context)
+                saveTokenUseCase.execute(token)
+
                 _state.value = SignInState.Success(token)
             } catch(ex: Exception) {
                 _state.value = SignInState.Failure(

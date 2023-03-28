@@ -10,6 +10,7 @@ import com.example.cinemalab.R
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.RegistrationBodyDto
 import com.example.cinemalab.domain.usecase.RegistrationUseCase
+import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -112,6 +113,10 @@ class SignUpViewModel @Inject constructor(
             _state.value = SignUpState.Loading
             try {
                 val token = registrationUseCase(body)
+
+                val saveTokenUseCase = SaveTokenUseCase(context)
+                saveTokenUseCase.execute(token)
+
                 _state.value = SignUpState.Success(token)
             } catch(ex: Exception) {
                 _state.value = SignUpState.Failure(

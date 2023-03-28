@@ -2,8 +2,11 @@ package com.example.cinemalab.di
 
 import com.example.cinemalab.common.Constants
 import com.example.cinemalab.data.remote.AuthApi
+import com.example.cinemalab.data.remote.ProfileApi
 import com.example.cinemalab.data.repository.AuthRepositoryImpl
+import com.example.cinemalab.data.repository.ProfileRepositoryImpl
 import com.example.cinemalab.domain.repository.AuthRepository
+import com.example.cinemalab.domain.repository.ProfileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,6 +46,23 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(api: AuthApi): AuthRepository {
         return AuthRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(): ProfileApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
+            .build()
+            .create(ProfileApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(api: ProfileApi): ProfileRepository {
+        return ProfileRepositoryImpl(api)
     }
 
 }

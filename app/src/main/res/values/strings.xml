@@ -27,4 +27,9 @@
     <string name="profile">Профиль</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_avatar">Изменить</string>
+    <string name="exit">Выход</string>
+    <string name="settings">Настройки</string>
+    <string name="history">История</string>
+    <string name="discussions">Обсуждения</string>
 </resources>
