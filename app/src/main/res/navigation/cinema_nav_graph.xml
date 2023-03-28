@@ -14,6 +14,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_bottomNavBarFragment"
+            app:destination="@id/bottomNavBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -25,5 +28,18 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_bottomNavBarFragment"
+            app:destination="@id/bottomNavBarFragment" />
+    </fragment>
+
+    <include app:graph="@navigation/bottom_bar_nav_graph" />
+    <fragment
+        android:id="@+id/bottomNavBarFragment"
+        android:name="com.example.cinemalab.BottomNavBarFragment"
+        android:label="BottomNavBarFragment" >
+        <action
+            android:id="@+id/action_bottomNavBarFragment_to_bottom_bar_nav_graph"
+            app:destination="@id/bottom_bar_nav_graph" />
     </fragment>
 </navigation>
