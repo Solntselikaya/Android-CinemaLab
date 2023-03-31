@@ -32,4 +32,12 @@
     <string name="settings">Настройки</string>
     <string name="history">История</string>
     <string name="discussions">Обсуждения</string>
+
+    <string name="name_and_surname">%1$s %2$s</string>
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="watch_button_text">Смотреть</string>
+    <string name="cd_promoted_movie_poster">Promoted movie poster</string>
 </resources>

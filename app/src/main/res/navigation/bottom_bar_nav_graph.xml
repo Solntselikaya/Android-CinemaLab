@@ -2,22 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_bar_nav_graph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.cinemalab.presentation.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:name="com.example.cinemalab.presentation.bottomnavscreens.profilescreen.ProfileFragment"
+        android:label="Profile" />
     <fragment
         android:id="@+id/collectionsFragment"
-        android:name="com.example.cinemalab.CollectionsFragment"
-        android:label="CollectionsFragment" />
+        android:name="com.example.cinemalab.presentation.bottomnavscreens.collectionsscreen.CollectionsFragment"
+        android:label="Collections" />
     <fragment
         android:id="@+id/compilationFragment"
-        android:name="com.example.cinemalab.CompilationFragment"
-        android:label="CompilationFragment" />
+        android:name="com.example.cinemalab.presentation.bottomnavscreens.compilationscreen.CompilationFragment"
+        android:label="Compilation" />
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.cinemalab.MainFragment"
-        android:label="MainFragment" />
+        android:name="com.example.cinemalab.presentation.bottomnavscreens.mainscreen.MainFragment"
+        android:label="Main" />
 </navigation>
