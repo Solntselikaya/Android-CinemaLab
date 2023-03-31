@@ -39,14 +39,8 @@ class SignInFragment : Fragment() {
                     binding.btRegistration.isEnabled = true
                 }
                 SignInViewModel.SignInState.Loading -> showLoading()
-                is SignInViewModel.SignInState.Failure -> {
-                    binding.progressBar.isVisible = false
-                    showErrorDialog(newState.errorMessage)
-                }
-                is SignInViewModel.SignInState.Success -> {
-                    binding.progressBar.isVisible = false
-                    navigateToMainScreen()
-                }
+                is SignInViewModel.SignInState.Failure -> showErrorDialog(newState.errorMessage)
+                is SignInViewModel.SignInState.Success -> navigateToMainScreen()
             }
         }
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
@@ -61,6 +55,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun showErrorDialog(message: String) {
+        binding.progressBar.isVisible = false
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
 
         builder.setTitle(getString(R.string.input_incorrect))
@@ -102,6 +97,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun navigateToMainScreen() {
+        binding.progressBar.isVisible = false
         findNavController().navigate(R.id.action_signInFragment_to_bottomNavActivity2)
 
         /*val intent = Intent(this@SignInFragment.requireContext(), BottomNavActivity::class.java)

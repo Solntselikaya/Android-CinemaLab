@@ -160,7 +160,7 @@
         app:layout_constraintTop_toTopOf="parent" />-->
 
     <RelativeLayout
-        android:id="@+id/loading_screen"
+        android:id="@+id/loadingScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

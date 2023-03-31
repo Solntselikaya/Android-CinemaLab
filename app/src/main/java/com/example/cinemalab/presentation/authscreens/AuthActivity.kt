@@ -9,6 +9,7 @@ import android.os.Bundle
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_CinemaLab)
         setContentView(R.layout.activity_main)
     }
 }
