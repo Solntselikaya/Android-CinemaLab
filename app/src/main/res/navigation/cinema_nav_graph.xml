@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cinema_nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.cinemalab.presentation.signin.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_bottomNavBarFragment"
+            app:destination="@id/bottomNavBarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.cinemalab.presentation.signup.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_bottomNavBarFragment"
+            app:destination="@id/bottomNavBarFragment" />
+    </fragment>
+
+    <include app:graph="@navigation/bottom_bar_nav_graph" />
+    <fragment
+        android:id="@+id/bottomNavBarFragment"
+        android:name="com.example.cinemalab.BottomNavBarFragment"
+        android:label="BottomNavBarFragment" >
+        <action
+            android:id="@+id/action_bottomNavBarFragment_to_bottom_bar_nav_graph"
+            app:destination="@id/bottom_bar_nav_graph" />
+    </fragment>
+</navigation>
