@@ -1,4 +1,4 @@
-package com.example.cinemalab.domain.usecase
+package com.example.cinemalab.domain.usecase.auth
 
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.RegistrationBodyDto

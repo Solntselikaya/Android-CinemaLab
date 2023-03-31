@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cinemalab.R
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.RegistrationBodyDto
-import com.example.cinemalab.domain.usecase.RegistrationUseCase
+import com.example.cinemalab.domain.usecase.auth.RegistrationUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
