@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
 import com.example.cinemalab.R
 import com.example.cinemalab.data.remote.dto.MovieDto
@@ -35,20 +36,24 @@ class MainFragment : Fragment() {
 
         val stateObserver = Observer<MainViewModel.MainState> { newState ->
             when(newState) {
-                MainViewModel.MainState.Initial -> {
-                    binding.loadingScreen.isGone = true
-                }
-                MainViewModel.MainState.Loading ->
-                    showLoading()
+                MainViewModel.MainState.Initial -> closeLoading()
+                MainViewModel.MainState.Loading -> showLoading()
                 is MainViewModel.MainState.Failure ->
                     showErrorDialog(newState.errorMessage)
                 is MainViewModel.MainState.Success -> {
-                    binding.loadingScreen.isGone = true
+                    Glide.with(this)
+                        .load(newState.promotedCover.cover)
+                        .into(binding.ivPromotedPoster)
+
                     setupRecyclerViews(
                         newState.moviesTrend,
                         newState.moviesNew,
                         newState.moviesForMe
                     )
+
+                    setupLastWatched(newState.lastWatchedMovie)
+
+                    closeLoading()
                 }
             }
         }
@@ -59,10 +64,17 @@ class MainFragment : Fragment() {
 
     private fun showLoading() {
         binding.loadingScreen.isGone = false
+        binding.btSetInterests.isEnabled = false
+        binding.cvLastWatched.isGone = true
+    }
+
+    private fun closeLoading() {
+        binding.loadingScreen.isGone = true
+        binding.btSetInterests.isEnabled = true
     }
 
     private fun showErrorDialog(message: String) {
-        binding.loadingScreen.isGone = true
+        closeLoading()
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
 
         builder.setTitle(getString(R.string.input_incorrect))
@@ -71,16 +83,16 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerViews(
-        moviesTrend: List<MovieDto>,
-        moviesNew: List<MovieDto>,
-        moviesForYou: List<MovieDto>
+        moviesTrend: List<MovieModel>,
+        moviesNew: List<MovieModel>,
+        moviesForYou: List<MovieModel>
     ) {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         if (moviesTrend.isNotEmpty()) {
             setupMoviesTrendRecyclerView(
                 layoutManager,
-                moviesTrend.map { it.toMovieModel() }
+                moviesTrend
             )
         }
         else {
@@ -91,7 +103,7 @@ class MainFragment : Fragment() {
         if (moviesNew.isNotEmpty()) {
             setupMoviesNewRecyclerView(
                 layoutManager,
-                moviesNew.map { it.toMovieModel() }
+                moviesNew
             )
         }
         else {
@@ -102,7 +114,7 @@ class MainFragment : Fragment() {
         if (moviesForYou.isNotEmpty()) {
             setupMoviesForYouRecyclerView(
                 layoutManager,
-                moviesForYou.map { it.toMovieModel() }
+                moviesForYou
             )
         }
         else {
@@ -133,6 +145,18 @@ class MainFragment : Fragment() {
     ) {
         binding.rvTrends.layoutManager = layoutManager
         binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(movies, this)
+    }
+
+    private fun setupLastWatched(movies: List<MovieModel>) {
+        if (movies.isNotEmpty() && movies.last().poster.isNotBlank()) {
+            binding.cvLastWatched.isGone = false
+            Glide.with(this).load(movies.last().poster).into(binding.ivLastWatchedPoster)
+            binding.tvLastWatched.text = movies.last().name
+        }
+        else {
+            binding.tvMoviesViewed.isGone = true
+            binding.cvLastWatched.isGone = true
+        }
     }
 
 }

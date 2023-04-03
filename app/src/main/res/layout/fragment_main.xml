@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".presentation.bottomnavscreens.mainscreen.MainFragment">
 
     <ImageView
@@ -13,6 +13,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/cd_promoted_movie_poster"
         android:scaleType="fitCenter"
+        android:foreground="@drawable/gradient_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btGoWatchPromoted"
         style="@style/button_orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +36,7 @@
         android:id="@+id/tvMoviesTrend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="В тренде"
         android:textAppearance="@style/Theme.CinemaLab.h5"
@@ -57,7 +58,7 @@
         android:id="@+id/tvMoviesViewed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Вы смотрели"
         android:textAppearance="@style/Theme.CinemaLab.h5"
@@ -65,52 +66,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvTrends" />
 
-    <ImageView
-        android:id="@+id/ivLastWatchedPoster"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvLastWatched"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMoviesViewed"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMoviesViewed">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:src="@drawable/icon_play_video"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
-        app:layout_constraintEnd_toEndOf="@+id/ivLastWatchedPoster"
-        app:layout_constraintStart_toStartOf="@+id/ivLastWatchedPoster"
-        app:layout_constraintTop_toTopOf="@+id/ivLastWatchedPoster" />
+        <ImageView
+            android:id="@+id/ivLastWatchedPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:foreground="@drawable/gradient_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvLastWatched"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#00FFFFFF"
-        android:textAppearance="@style/Theme.CinemaLab.button"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_play_video"
+            app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
+            app:layout_constraintEnd_toEndOf="@+id/ivLastWatchedPoster"
+            app:layout_constraintStart_toStartOf="@+id/ivLastWatchedPoster"
+            app:layout_constraintTop_toTopOf="@+id/ivLastWatchedPoster" />
+
+        <TextView
+            android:id="@+id/tvLastWatched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#00FFFFFF"
+            android:text="test"
+            android:textAppearance="@style/Theme.CinemaLab.button"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tvMoviesNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Новое"
         android:textAppearance="@style/Theme.CinemaLab.h5"
         android:textColor="@color/orange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLastWatchedPoster" />
+        app:layout_constraintTop_toBottomOf="@+id/cvLastWatched" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNewMovies"
@@ -126,7 +141,7 @@
         android:id="@+id/tvMoviesForYou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Для вас"
         android:textAppearance="@style/Theme.CinemaLab.h5"
@@ -140,21 +155,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMoviesForYou" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btSetInterests"
         style="@style/button_orange"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginBottom="44dp"
         android:text="Указать интересы"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvMoviesForYou" />
 
@@ -163,7 +180,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/loading"
@@ -171,11 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="visible" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,5 +8,8 @@ data class PromotedCoverDto(
 )
 
 fun PromotedCoverDto.toPromotedCoverModel(): PromotedCoverModel {
-    return PromotedCoverModel(cover = backgroundImage)
+
+    val regex = Regex("\t")
+    val coverUrl = regex.replace(backgroundImage, "")
+    return PromotedCoverModel(cover = coverUrl)
 }

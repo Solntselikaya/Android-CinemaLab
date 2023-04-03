@@ -9,8 +9,10 @@ import com.example.cinemalab.R
 import com.example.cinemalab.data.remote.dto.MovieDto
 import com.example.cinemalab.data.remote.dto.PromotedCoverDto
 import com.example.cinemalab.data.remote.dto.toMovieModel
+import com.example.cinemalab.data.remote.dto.toPromotedCoverModel
 import com.example.cinemalab.domain.model.Filters
 import com.example.cinemalab.domain.model.MovieModel
+import com.example.cinemalab.domain.model.PromotedCoverModel
 import com.example.cinemalab.domain.usecase.cover.GetPromotedBannerUseCase
 import com.example.cinemalab.domain.usecase.movie.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,11 +32,11 @@ class MainViewModel @Inject constructor(
         object Loading: MainState()
         class Failure(val errorMessage: String): MainState()
         class Success(
-            val promotedCover: PromotedCoverDto,
-            val moviesTrend: List<MovieDto>,
-            //val lastWatchedMovie: MovieDto,
-            val moviesNew: List<MovieDto>,
-            val moviesForMe: List<MovieDto>
+            val promotedCover: PromotedCoverModel,
+            val moviesTrend: List<MovieModel>,
+            val lastWatchedMovie: List<MovieModel>,
+            val moviesNew: List<MovieModel>,
+            val moviesForMe: List<MovieModel>
         ): MainState()
     }
 
@@ -58,11 +60,11 @@ class MainViewModel @Inject constructor(
                 val moviesForMe = getMoviesUseCase(Filters.forMe.name)
 
                 _state.value = MainState.Success(
-                    promotedCover = cover,
-                    moviesTrend = moviesTrend,
-                    //lastWatchedMovie = lastWatchedMovie.last(),
-                    moviesNew = moviesNew,
-                    moviesForMe = moviesForMe
+                    promotedCover = cover.toPromotedCoverModel(),
+                    moviesTrend = moviesTrend.map { it.toMovieModel() },
+                    lastWatchedMovie = lastWatchedMovie.map { it.toMovieModel() },
+                    moviesNew = moviesNew.map { it.toMovieModel() },
+                    moviesForMe = moviesForMe.map { it.toMovieModel() }
                 )
             } catch(ex: Exception) {
                 //_state.value = MainState.Failure(context.getString(R.string.error_something_went_wrong))

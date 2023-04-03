@@ -40,4 +40,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="watch_button_text">Смотреть</string>
     <string name="cd_promoted_movie_poster">Promoted movie poster</string>
+    <string name="there_are_no_more_compilation_films">Новые фильмы \nв подборке закончились</string>
 </resources>
