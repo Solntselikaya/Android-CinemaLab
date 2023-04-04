@@ -1,7 +1,6 @@
 package com.example.cinemalab.presentation.authscreens.signinscreen
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentSignInBinding
-import com.example.cinemalab.presentation.bottomnavscreens.BottomNavActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

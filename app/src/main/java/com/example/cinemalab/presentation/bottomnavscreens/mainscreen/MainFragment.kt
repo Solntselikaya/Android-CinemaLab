@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
 import com.example.cinemalab.R
-import com.example.cinemalab.data.remote.dto.MovieDto
-import com.example.cinemalab.data.remote.dto.toMovieModel
 import com.example.cinemalab.databinding.FragmentMainBinding
 import com.example.cinemalab.domain.model.MovieModel
 import dagger.hilt.android.AndroidEntryPoint

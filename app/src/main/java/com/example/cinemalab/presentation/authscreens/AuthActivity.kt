@@ -1,9 +1,9 @@
 package com.example.cinemalab.presentation.authscreens
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemalab.R
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {

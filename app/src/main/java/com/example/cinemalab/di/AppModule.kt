@@ -1,18 +1,9 @@
 package com.example.cinemalab.di
 
 import com.example.cinemalab.common.Constants
-import com.example.cinemalab.data.remote.AuthApi
-import com.example.cinemalab.data.remote.CoverApi
-import com.example.cinemalab.data.remote.MovieApi
-import com.example.cinemalab.data.remote.ProfileApi
-import com.example.cinemalab.data.repository.AuthRepositoryImpl
-import com.example.cinemalab.data.repository.CoverRepositoryImpl
-import com.example.cinemalab.data.repository.MovieRepositoryImpl
-import com.example.cinemalab.data.repository.ProfileRepositoryImpl
-import com.example.cinemalab.domain.repository.AuthRepository
-import com.example.cinemalab.domain.repository.CoverRepository
-import com.example.cinemalab.domain.repository.MovieRepository
-import com.example.cinemalab.domain.repository.ProfileRepository
+import com.example.cinemalab.data.remote.*
+import com.example.cinemalab.data.repository.*
+import com.example.cinemalab.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -103,6 +94,23 @@ object AppModule {
     @Singleton
     fun provideMovieRepository(api: MovieApi): MovieRepository {
         return MovieRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionApi(): CollectionApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
+            .build()
+            .create(CollectionApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionRepository(api: CollectionApi): CollectionRepository {
+        return CollectionRepositoryImpl(api)
     }
 
 }

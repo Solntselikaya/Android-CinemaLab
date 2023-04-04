@@ -5,9 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemalab.R
-import com.example.cinemalab.data.remote.dto.MovieDto
-import com.example.cinemalab.data.remote.dto.PromotedCoverDto
 import com.example.cinemalab.data.remote.dto.toMovieModel
 import com.example.cinemalab.data.remote.dto.toPromotedCoverModel
 import com.example.cinemalab.domain.model.Filters

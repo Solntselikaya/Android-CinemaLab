@@ -9,7 +9,6 @@ import com.example.cinemalab.domain.model.Filters
 import com.example.cinemalab.domain.model.MovieModel
 import com.example.cinemalab.domain.usecase.movie.DislikeMovieInCompilationUseCase
 import com.example.cinemalab.domain.usecase.movie.GetMoviesUseCase
-import com.example.cinemalab.presentation.bottomnavscreens.mainscreen.MainViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

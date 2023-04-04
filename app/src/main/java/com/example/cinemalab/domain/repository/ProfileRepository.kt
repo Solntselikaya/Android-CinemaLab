@@ -1,6 +1,5 @@
 package com.example.cinemalab.domain.repository
 
-import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.ProfileInfoDto
 
 interface ProfileRepository {

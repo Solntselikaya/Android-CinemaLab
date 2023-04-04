@@ -1,7 +1,6 @@
 package com.example.cinemalab.data.repository
 
 import com.example.cinemalab.data.remote.ProfileApi
-import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.ProfileInfoDto
 import com.example.cinemalab.domain.repository.ProfileRepository
 import javax.inject.Inject
