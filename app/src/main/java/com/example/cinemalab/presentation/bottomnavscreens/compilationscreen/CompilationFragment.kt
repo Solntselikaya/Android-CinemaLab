@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
@@ -38,6 +39,7 @@ class CompilationFragment : Fragment(), CardStackListener {
         binding = FragmentCompilationBinding.bind(view)
 
         initCardStackView()
+        setOnButtonClickListeners()
 
         val stateObserver = Observer<CompilationViewModel.CompilationState> { newState ->
             when(newState) {
@@ -87,6 +89,44 @@ class CompilationFragment : Fragment(), CardStackListener {
         binding.loading.hide()
     }
 
+    private fun setOnButtonClickListeners() {
+        setOnDismissButtonClickListener()
+        setOnLikeButtonClickListener()
+        setOnPlayButtonClickListener()
+    }
+
+    private fun setOnDismissButtonClickListener() {
+        binding.btDismiss.setOnClickListener {
+            viewModel.dislikeCurrMovie()
+
+            val swipeSettings = SwipeAnimationSetting.Builder()
+            .setDirection(Direction.Left)
+            .setDuration(Duration.Normal.duration)
+            .setInterpolator(AccelerateInterpolator())
+            .build()
+            cardManager.setSwipeAnimationSetting(swipeSettings)
+            binding.csvCompilation.swipe()
+        }
+    }
+
+    private fun setOnLikeButtonClickListener() {
+        binding.btLike.setOnClickListener {
+            val swipeSettings = SwipeAnimationSetting.Builder()
+                .setDirection(Direction.Right)
+                .setDuration(Duration.Normal.duration)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+            cardManager.setSwipeAnimationSetting(swipeSettings)
+            binding.csvCompilation.swipe()
+        }
+    }
+
+    private fun setOnPlayButtonClickListener() {
+        binding.btPlay.setOnClickListener {
+
+        }
+    }
+
     private fun initCardStackView() {
         cardManager.setStackFrom(StackFrom.None)
         cardManager.setVisibleCount(2)
@@ -118,7 +158,9 @@ class CompilationFragment : Fragment(), CardStackListener {
     }
 
     override fun onCardSwiped(direction: Direction?) {
-
+        if(direction == Direction.Left) {
+            viewModel.dislikeCurrMovie()
+        }
     }
 
     override fun onCardRewound() {
@@ -131,6 +173,7 @@ class CompilationFragment : Fragment(), CardStackListener {
 
     override fun onCardAppeared(view: View?, position: Int) {
         val currMovies = cardAdapter.getMovies()
+        viewModel.setNewCurrMovieId(currMovies[position].movieId)
         binding.tvMovieName.text = currMovies[position].name
     }
 
