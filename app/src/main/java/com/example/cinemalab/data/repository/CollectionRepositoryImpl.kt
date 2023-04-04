@@ -2,6 +2,7 @@ package com.example.cinemalab.data.repository
 
 import com.example.cinemalab.data.remote.CollectionApi
 import com.example.cinemalab.data.remote.dto.CollectionDto
+import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.MovieDto
 import com.example.cinemalab.domain.repository.CollectionRepository
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class CollectionRepositoryImpl @Inject constructor(
         return api.get(token)
     }
 
-    override suspend fun post(token: String, collectionName: String) {
+    override suspend fun post(token: String, collectionName: CollectionNameDto) {
         return api.post(token, collectionName)
     }
 

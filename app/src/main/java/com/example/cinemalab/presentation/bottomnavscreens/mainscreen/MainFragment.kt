@@ -34,11 +34,13 @@ class MainFragment : Fragment() {
 
         val stateObserver = Observer<MainViewModel.MainState> { newState ->
             when(newState) {
-                MainViewModel.MainState.Initial -> closeLoading()
+                MainViewModel.MainState.Initial -> hideLoading()
                 MainViewModel.MainState.Loading -> showLoading()
                 is MainViewModel.MainState.Failure ->
                     showErrorDialog(newState.errorMessage)
                 is MainViewModel.MainState.Success -> {
+                    hideLoading()
+
                     Glide.with(this)
                         .load(newState.promotedCover.cover)
                         .into(binding.ivPromotedPoster)
@@ -50,8 +52,6 @@ class MainFragment : Fragment() {
                     )
 
                     setupLastWatched(newState.lastWatchedMovie)
-
-                    closeLoading()
                 }
             }
         }
@@ -60,19 +60,23 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun showLoading() {
-        binding.loadingScreen.isGone = false
-        binding.btSetInterests.isEnabled = false
-        binding.cvLastWatched.isGone = true
+    override fun onStart() {
+        viewModel.getAllMovies()
+        super.onStart()
     }
 
-    private fun closeLoading() {
-        binding.loadingScreen.isGone = true
-        binding.btSetInterests.isEnabled = true
+    private fun showLoading() {
+        binding.grMainContent.isGone = true
+        binding.loading.show()
+    }
+
+    private fun hideLoading() {
+        binding.grMainContent.isGone = false
+        binding.loading.hide()
     }
 
     private fun showErrorDialog(message: String) {
-        closeLoading()
+        hideLoading()
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
 
         builder.setTitle(getString(R.string.input_incorrect))
@@ -106,7 +110,7 @@ class MainFragment : Fragment() {
         }
         else {
             binding.rvNewMovies.isGone = true
-            binding.tvMoviesViewed.isGone = true
+            binding.tvMoviesNew.isGone = true
         }
 
         if (moviesForYou.isNotEmpty()) {
@@ -141,7 +145,7 @@ class MainFragment : Fragment() {
         layoutManager: LayoutManager,
         movies: List<MovieModel>
     ) {
-        binding.rvTrends.layoutManager = layoutManager
+        binding.rvMoviesForYou.layoutManager = layoutManager
         binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(movies, this)
     }
 
@@ -152,8 +156,8 @@ class MainFragment : Fragment() {
             binding.tvLastWatched.text = movies.last().name
         }
         else {
-            binding.tvMoviesViewed.isGone = true
             binding.cvLastWatched.isGone = true
+            binding.tvMoviesViewed.isGone = true
         }
     }
 

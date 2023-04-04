@@ -40,11 +40,11 @@ class MainViewModel @Inject constructor(
     private val _state = MutableLiveData<MainState>(MainState.Initial)
     var state: LiveData<MainState> = _state
 
-    init {
+    /*init {
         getAllMovies()
-    }
+    }*/
 
-    private fun getAllMovies() {
+    fun getAllMovies() {
 
         _state.value = MainState.Loading
 

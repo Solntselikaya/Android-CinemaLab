@@ -31,23 +31,14 @@ class ProfileFragment : Fragment() {
 
         val stateObserver = Observer<ProfileViewModel.ProfileState> { newState ->
             when(newState) {
-                ProfileViewModel.ProfileState.Initial -> {
-                    //binding.progressBar.isVisible = false
-                    //binding.loading.hide()
-                    binding.loadingScreen.isGone = true
-                    viewModel.getProfileInfo()
-                }
+                ProfileViewModel.ProfileState.Initial -> Unit
                 ProfileViewModel.ProfileState.Loading -> showLoading()
                 is ProfileViewModel.ProfileState.Failure -> {
-                    //binding.progressBar.isVisible = false
-                    //binding.loading.hide()
-                    binding.loadingScreen.isGone = true
+                    hideLoading()
                     showErrorDialog(newState.errorMessage)
                 }
                 is ProfileViewModel.ProfileState.Success -> {
-                    //binding.progressBar.isVisible = false
-                    //binding.loading.hide()
-                    binding.loadingScreen.isGone = true
+                    hideLoading()
                     putProfileInfo(
                         newState.profileInfo.firstName,
                         newState.profileInfo.lastName,
@@ -62,6 +53,11 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    /*override fun onStart() {
+        viewModel.
+        super.onStart()
+    }*/
+
     private fun setOnClickListeners() {
         binding.editAvatar.setOnClickListener {
 
@@ -69,10 +65,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showLoading() {
-        //binding.progressBar.isVisible = true
-        //binding.loading.show()
-        binding.loadingScreen.isGone = false
-        binding.btLogout.isEnabled = false
+        binding.grProfileContent.isGone = true
+        binding.loading.show()
+    }
+
+    private fun hideLoading() {
+        binding.grProfileContent.isGone = false
+        binding.loading.hide()
     }
 
     private fun putProfileInfo(

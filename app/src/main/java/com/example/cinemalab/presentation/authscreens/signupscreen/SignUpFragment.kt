@@ -113,7 +113,8 @@ class SignUpFragment : Fragment() {
     }
 
     private fun navigateToMainScreen() {
-
+        binding.progressBar.isVisible = false
+        findNavController().navigate(R.id.action_signUpFragment_to_bottomNavActivity2)
     }
 
 }

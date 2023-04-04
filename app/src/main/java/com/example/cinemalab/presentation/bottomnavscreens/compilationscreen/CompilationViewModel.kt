@@ -37,11 +37,11 @@ class CompilationViewModel @Inject constructor(
         _currMovieId.value = newId
     }
 
-    init {
+    /*init {
         getCompilation()
-    }
+    }*/
 
-    private fun getCompilation() {
+    fun getCompilation() {
 
         _state.value = CompilationState.Loading
 

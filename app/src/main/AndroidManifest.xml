@@ -17,6 +17,9 @@
         android:theme="@style/splashScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.createcollectionscreen.CreateCollectionScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.bottomnavscreens.BottomNavActivity"
             android:exported="false"
             android:label="@string/title_activity_bottom_nav" />

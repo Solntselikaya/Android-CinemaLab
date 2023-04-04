@@ -1,13 +1,14 @@
 package com.example.cinemalab.domain.repository
 
 import com.example.cinemalab.data.remote.dto.CollectionDto
+import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.MovieDto
 
 interface CollectionRepository {
 
     suspend fun get(token: String): List<CollectionDto>
 
-    suspend fun post(token: String, collectionName: String)
+    suspend fun post(token: String, collectionName: CollectionNameDto)
 
     suspend fun delete(token: String, collectionId: String)
 

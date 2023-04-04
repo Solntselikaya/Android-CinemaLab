@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_bar_nav_graph"
     app:startDestination="@id/mainFragment">
 
@@ -11,7 +12,11 @@
     <fragment
         android:id="@+id/collectionsFragment"
         android:name="com.example.cinemalab.presentation.bottomnavscreens.collectionsscreen.CollectionsFragment"
-        android:label="Collections" />
+        android:label="Collections" >
+        <action
+            android:id="@+id/action_collectionsFragment_to_createCollectionScreenActivity"
+            app:destination="@id/createCollectionScreenActivity" />
+    </fragment>
     <fragment
         android:id="@+id/compilationFragment"
         android:name="com.example.cinemalab.presentation.bottomnavscreens.compilationscreen.CompilationFragment"
@@ -20,4 +25,9 @@
         android:id="@+id/mainFragment"
         android:name="com.example.cinemalab.presentation.bottomnavscreens.mainscreen.MainFragment"
         android:label="Main" />
+    <activity
+        android:id="@+id/createCollectionScreenActivity"
+        android:name="com.example.cinemalab.presentation.createcollectionscreen.CreateCollectionScreenActivity"
+        android:label="activity_create_collection_screen"
+        tools:layout="@layout/activity_create_collection_screen" />
 </navigation>

@@ -37,4 +37,9 @@
     <string name="watch_button_text">Смотреть</string>
     <string name="cd_promoted_movie_poster">Promoted movie poster</string>
     <string name="there_are_no_more_compilation_films">Новые фильмы \nв подборке закончились</string>
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="create_collection">Создать коллекцию</string>
+    <string name="collection_name">Название</string>
+    <string name="choose_icon">Выбрать иконку</string>
+    <string name="save">Сохранить</string>
 </resources>

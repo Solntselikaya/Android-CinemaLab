@@ -28,11 +28,15 @@ class ProfileViewModel @Inject constructor(
     private val _state = MutableLiveData<ProfileState>(ProfileState.Initial)
     var state: LiveData<ProfileState> = _state
 
+    init {
+        getProfileInfo()
+    }
+
     fun exitAlertDialog() {
         _state.value = ProfileState.Initial
     }
 
-    fun getProfileInfo() {
+    private fun getProfileInfo() {
         viewModelScope.launch {
             _state.value = ProfileState.Loading
             try {

@@ -54,7 +54,12 @@ class CompilationFragment : Fragment(), CardStackListener {
                 }
                 is CompilationViewModel.CompilationState.Success -> {
                     hideLoading()
-                    setupCardStackView(newState.compilation)
+                    if(newState.compilation.isEmpty()) {
+                        showPlug()
+                    }
+                    else {
+                        setupCardStackView(newState.compilation)
+                    }
                 }
             }
 
@@ -62,6 +67,11 @@ class CompilationFragment : Fragment(), CardStackListener {
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        viewModel.getCompilation()
+        super.onStart()
     }
 
     private fun showErrorDialog(message: String) {

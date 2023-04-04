@@ -1,6 +1,7 @@
 package com.example.cinemalab.data.remote
 
 import com.example.cinemalab.data.remote.dto.CollectionDto
+import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.MovieDto
 import retrofit2.http.*
 
@@ -11,10 +12,10 @@ interface CollectionApi {
         @Header("Authorization") token: String
     ): List<CollectionDto>
 
-    @POST("/collections")
+    @POST("collections")
     suspend fun post(
         @Header("Authorization") token: String,
-        @Body collectionName: String
+        @Body collectionName: CollectionNameDto
     )
 
     @DELETE("collections/{collectionId}")
