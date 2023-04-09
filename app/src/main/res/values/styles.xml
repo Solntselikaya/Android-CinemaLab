@@ -2,6 +2,15 @@
 <resources>
     <!-- Text styles-->
     <style
+        name="Theme.CinemaLab.caption"
+        parent="Theme.CinemaLab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style
         name="Theme.CinemaLab.body1"
         parent="Theme.CinemaLab">
         <item name="android:textSize">16sp</item>

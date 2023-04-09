@@ -3,6 +3,8 @@ package com.example.cinemalab.data.remote
 import com.example.cinemalab.data.remote.dto.CollectionDto
 import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.MovieDto
+import com.example.cinemalab.data.remote.dto.MovieIdDto
+import retrofit2.Response
 import retrofit2.http.*
 
 interface CollectionApi {
@@ -16,13 +18,13 @@ interface CollectionApi {
     suspend fun post(
         @Header("Authorization") token: String,
         @Body collectionName: CollectionNameDto
-    )
+    ): CollectionDto
 
     @DELETE("collections/{collectionId}")
     suspend fun delete(
         @Header("Authorization") token: String,
         @Path("collectionId") collectionId: String
-    )
+    ): Response<Void>
 
     @GET("collections/{collectionId}/movies")
     suspend fun getCollectionMovies(
@@ -34,7 +36,7 @@ interface CollectionApi {
     suspend fun addMovieToCollection(
         @Header("Authorization") token: String,
         @Path("collectionId") collectionId: String,
-        @Body movieId: String
+        @Body movieId: MovieIdDto
     )
 
     // тут бади или квери??????

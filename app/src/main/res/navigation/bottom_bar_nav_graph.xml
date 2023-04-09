@@ -7,27 +7,40 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.cinemalab.presentation.bottomnavscreens.profilescreen.ProfileFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.profilescreen.ProfileFragment"
         android:label="Profile" />
     <fragment
         android:id="@+id/collectionsFragment"
-        android:name="com.example.cinemalab.presentation.bottomnavscreens.collectionsscreen.CollectionsFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.collectionsscreen.CollectionsFragment"
         android:label="Collections" >
         <action
-            android:id="@+id/action_collectionsFragment_to_createCollectionScreenActivity"
-            app:destination="@id/createCollectionScreenActivity" />
+            android:id="@+id/action_collectionsFragment_to_collectionActionsActivity"
+            app:destination="@id/collectionEditActivity"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_collectionsFragment_to_collectionCreateActivity"
+            app:destination="@id/collectionCreateActivity" />
     </fragment>
     <fragment
         android:id="@+id/compilationFragment"
-        android:name="com.example.cinemalab.presentation.bottomnavscreens.compilationscreen.CompilationFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.compilationscreen.CompilationFragment"
         android:label="Compilation" />
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.cinemalab.presentation.bottomnavscreens.mainscreen.MainFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.mainscreen.MainFragment"
         android:label="Main" />
     <activity
-        android:id="@+id/createCollectionScreenActivity"
-        android:name="com.example.cinemalab.presentation.createcollectionscreen.CreateCollectionScreenActivity"
-        android:label="activity_create_collection_screen"
-        tools:layout="@layout/activity_create_collection_screen" />
+        android:id="@+id/collectionEditActivity"
+        android:name="com.example.cinemalab.presentation.collectionactions.edit.CollectionEditActivity"
+        android:label="activity_collection_actions"
+        tools:layout="@layout/activity_collection_edit" >
+        <argument
+            android:name="collectionModel"
+            app:argType="com.example.cinemalab.domain.model.CollectionModel" />
+    </activity>
+    <activity
+        android:id="@+id/collectionCreateActivity"
+        android:name="com.example.cinemalab.presentation.collectionactions.create.CollectionCreateActivity"
+        android:label="activity_collection_create"
+        tools:layout="@layout/activity_collection_create" />
 </navigation>

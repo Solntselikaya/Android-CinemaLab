@@ -17,14 +17,23 @@
         android:theme="@style/splashScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.createcollectionscreen.CreateCollectionScreenActivity"
+            android:name=".MovieActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.bottomnavscreens.BottomNavActivity"
+            android:name=".presentation.collectionactions.create.CollectionCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.collectionactions.edit.CollectionEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.collectionactions.create.createcollectionscreen.CreateCollectionScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.bottomnav.BottomNavActivity"
             android:exported="false"
             android:label="@string/title_activity_bottom_nav" />
         <activity
-            android:name=".presentation.authscreens.AuthActivity"
+            android:name=".presentation.auth.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

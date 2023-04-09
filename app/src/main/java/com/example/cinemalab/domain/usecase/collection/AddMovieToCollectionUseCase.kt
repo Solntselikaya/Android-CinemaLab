@@ -1,6 +1,7 @@
 package com.example.cinemalab.domain.usecase.collection
 
 import android.content.Context
+import com.example.cinemalab.data.remote.dto.MovieIdDto
 import com.example.cinemalab.domain.repository.CollectionRepository
 import com.example.cinemalab.domain.usecase.token.GetTokenFromLocalStorageUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,7 +12,7 @@ class AddMovieToCollectionUseCase @Inject constructor(
     private val repository: CollectionRepository
 ) {
 
-    suspend operator fun invoke(collectionId: String, movieId: String) {
+    suspend operator fun invoke(collectionId: String, movieId: MovieIdDto) {
         val getTokenFromLocalStorageUseCase = GetTokenFromLocalStorageUseCase(context)
         val token = getTokenFromLocalStorageUseCase.execute()
 

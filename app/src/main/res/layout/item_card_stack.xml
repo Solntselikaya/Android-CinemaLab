@@ -12,11 +12,11 @@
     android:layout_marginEnd="24dp"
     android:layout_marginBottom="32dp" >
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/ivMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <FrameLayout
@@ -48,7 +48,6 @@
             android:background="@color/transparent"
             android:src="@drawable/icon_like"
             android:layout_gravity="center"/>
-
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>

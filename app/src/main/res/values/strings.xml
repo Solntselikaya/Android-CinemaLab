@@ -19,7 +19,7 @@
     <string name="error_something_went_wrong">Что-то пошло не так</string>
     <string name="error_user_already_exists">Почта уже занята</string>
     <string name="exception_http_409">HTTP 409 Conflict</string>
-    <string name="exception_http_401">401 Unauthorized</string>
+    <string name="exception_http_401">HTTP 401 Unauthorized</string>
     <string name="invalid_email_or_password">Неверные логин или пароль</string>
     <string name="main">Главное</string>
     <string name="compilation">Подборка</string>
@@ -42,4 +42,12 @@
     <string name="collection_name">Название</string>
     <string name="choose_icon">Выбрать иконку</string>
     <string name="save">Сохранить</string>
+    <string name="favourites">Избранное</string>
+    <string name="edit_collection">Изменить коллекцию</string>
+    <string name="delete">Удалить</string>
+    <string name="icon_select">Выбрать иконку</string>
+    <string name="try_to_use_reserved_name_error_message">Коллекция "Избранное" уже существует! \nПожалуйста, выберите другое имя</string>
+    <string name="description">Описание</string>
+    <string name="frames">Кадры</string>
+    <string name="episodes">Эпизоды</string>
 </resources>
