@@ -5,13 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinemalab.common.Constants
 import com.example.cinemalab.data.remote.dto.MovieIdDto
 import com.example.cinemalab.data.remote.dto.toMovieModel
 import com.example.cinemalab.domain.model.Filters
 import com.example.cinemalab.domain.model.MovieModel
-import com.example.cinemalab.domain.usecase.collection.AddMovieToCollectionUseCase
-import com.example.cinemalab.domain.usecase.collection.GetFavouritesCollectionIdUseCase
+import com.example.cinemalab.domain.usecase.collection.api.AddMovieToCollectionUseCase
+import com.example.cinemalab.domain.usecase.collection.api.GetFavouritesCollectionIdUseCase
 import com.example.cinemalab.domain.usecase.movie.DislikeMovieInCompilationUseCase
 import com.example.cinemalab.domain.usecase.movie.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

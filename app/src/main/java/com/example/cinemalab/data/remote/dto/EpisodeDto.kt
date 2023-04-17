@@ -18,10 +18,12 @@ data class EpisodeDto(
 fun EpisodeDto.toEpisodeModel(): EpisodeModel {
     return EpisodeModel(
         description = description,
+        director = director,
         episodeId = episodeId,
         filePath = filePath,
         name = name,
         preview = preview,
-        year = year
+        year = year,
+        runtime = runtime
     )
 }

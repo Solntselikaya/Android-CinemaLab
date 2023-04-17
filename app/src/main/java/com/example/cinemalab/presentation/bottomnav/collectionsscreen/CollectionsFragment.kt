@@ -22,6 +22,11 @@ class CollectionsFragment : Fragment() {
     private lateinit var binding: FragmentCollectionsBinding
     private val viewModel: CollectionsViewModel by viewModels()
 
+    override fun onStart() {
+        viewModel.initCollections()
+        super.onStart()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,11 +57,6 @@ class CollectionsFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
-    }
-
-    override fun onStart() {
-        viewModel.getCollections()
-        super.onStart()
     }
 
     private fun setOnClickListeners() {

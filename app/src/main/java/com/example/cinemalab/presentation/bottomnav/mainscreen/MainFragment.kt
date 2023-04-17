@@ -9,6 +9,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
@@ -130,7 +131,7 @@ class MainFragment : Fragment() {
         movies: List<MovieModel>
     ) {
         binding.rvTrends.layoutManager = layoutManager
-        binding.rvTrends.adapter = CustomRecyclerAdapter(movies, this)
+        binding.rvTrends.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
     }
 
     private fun setupMoviesNewRecyclerView(
@@ -138,7 +139,7 @@ class MainFragment : Fragment() {
         movies: List<MovieModel>
     ) {
         binding.rvNewMovies.layoutManager = layoutManager
-        binding.rvNewMovies.adapter = CustomRecyclerAdapter(movies, this)
+        binding.rvNewMovies.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
     }
 
     private fun setupMoviesForYouRecyclerView(
@@ -146,7 +147,7 @@ class MainFragment : Fragment() {
         movies: List<MovieModel>
     ) {
         binding.rvMoviesForYou.layoutManager = layoutManager
-        binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(movies, this)
+        binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
     }
 
     private fun setupLastWatched(movies: List<MovieModel>) {
@@ -159,6 +160,11 @@ class MainFragment : Fragment() {
             binding.cvLastWatched.isGone = true
             binding.tvMoviesViewed.isGone = true
         }
+    }
+
+    private fun openMovieDetails(movie: MovieModel) {
+        val action = MainFragmentDirections.actionMainFragmentToMovieActivity(movie)
+        findNavController().navigate(action)
     }
 
 }

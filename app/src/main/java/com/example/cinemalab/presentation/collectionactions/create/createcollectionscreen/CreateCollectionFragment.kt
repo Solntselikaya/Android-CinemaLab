@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentCreateCollectionBinding
+import com.example.cinemalab.presentation.collectionactions.create.CollectionCreateActivity
+import com.example.cinemalab.presentation.movie.MovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,11 @@ class CreateCollectionFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateCollectionBinding
     private val viewModel: CreateCollectionViewModel by viewModels()
+
+    override fun onStart() {
+        setupIcon()
+        super.onStart()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +67,13 @@ class CreateCollectionFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
+    }
+
+    private fun setupIcon() {
+        val activity: CollectionCreateActivity? = activity as CollectionCreateActivity?
+        val collectionInfo = activity?.getCollection()
+
+        binding.ivIcon.setImageResource(collectionInfo?.icon ?: R.drawable.collection_icon_01)
     }
 
     private fun showLoading() {
@@ -100,8 +114,13 @@ class CreateCollectionFragment : Fragment() {
 
     private fun setOnSaveButtonClickListener() {
         binding.btSave.setOnClickListener {
+
+            val activity: CollectionCreateActivity? = activity as CollectionCreateActivity?
+            val collectionInfo = activity?.getCollection()
+
             viewModel.createCollection(
-                binding.etCollectionName.text.toString()
+                binding.etCollectionName.text.toString(),
+                collectionInfo?.icon
             )
         }
     }

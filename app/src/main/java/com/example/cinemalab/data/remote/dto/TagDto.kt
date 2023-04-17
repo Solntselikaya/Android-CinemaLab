@@ -9,5 +9,5 @@ data class TagDto(
 )
 
 fun TagDto.toTagModel(): TagModel {
-    return TagModel(categoryName)
+    return TagModel(tagName)
 }

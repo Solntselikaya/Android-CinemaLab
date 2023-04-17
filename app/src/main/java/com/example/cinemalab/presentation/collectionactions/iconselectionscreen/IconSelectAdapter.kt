@@ -7,7 +7,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemalab.R
 
-class IconSelectAdapter(private val icons: List<Int>) : RecyclerView.Adapter<IconSelectAdapter.SelectIconViewHolder>() {
+class IconSelectAdapter(
+    private val icons: List<Int>,
+    private val onClick: (Int) -> Unit
+) : RecyclerView.Adapter<IconSelectAdapter.SelectIconViewHolder>() {
 
     inner class SelectIconViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.imageView)
@@ -21,6 +24,7 @@ class IconSelectAdapter(private val icons: List<Int>) : RecyclerView.Adapter<Ico
 
     override fun onBindViewHolder(holder: SelectIconViewHolder, position: Int) {
         holder.icon.setImageResource(icons[position])
+        holder.icon.setOnClickListener { onClick(icons[position]) }
     }
 
     override fun getItemCount(): Int {

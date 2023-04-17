@@ -12,19 +12,15 @@
         tools:layout="@layout/fragment_create_collection" >
         <action
             android:id="@+id/action_createCollectionFragment_to_iconSelectFragment2"
-            app:destination="@id/iconSelectFragment2"
+            app:destination="@id/iconSelectFragment"
             app:launchSingleTop="true" />
+        <argument
+            android:name="iconId"
+            app:argType="long" />
     </fragment>
     <fragment
-        android:id="@+id/iconSelectFragment2"
+        android:id="@+id/iconSelectFragment"
         android:name="com.example.cinemalab.presentation.collectionactions.iconselectionscreen.IconSelectFragment"
         android:label="fragment_icon_select"
-        tools:layout="@layout/fragment_icon_select" >
-        <action
-            android:id="@+id/action_iconSelectFragment2_to_createCollectionFragment"
-            app:destination="@id/createCollectionFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/createCollectionFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_icon_select" />
 </navigation>

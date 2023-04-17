@@ -12,7 +12,7 @@ import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.RegistrationBodyDto
 import com.example.cinemalab.domain.usecase.auth.RegistrationUseCase
-import com.example.cinemalab.domain.usecase.collection.CreateCollectionUseCase
+import com.example.cinemalab.domain.usecase.collection.api.CreateCollectionUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -121,7 +121,7 @@ class SignUpViewModel @Inject constructor(
                 val saveTokenUseCase = SaveTokenUseCase(context)
                 saveTokenUseCase.execute(token)
                 
-                val favourites = createCollectionUseCase(CollectionNameDto(Constants.RESERVED_NAME_FAVOURITES.toString()))
+                val favourites = createCollectionUseCase(CollectionNameDto(context.getString(R.string.favourites)))
                 val sharedPrefs = context.getSharedPreferences(Constants.PREF_NAME_FAVOURITES_ID, Context.MODE_PRIVATE)
                 sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favourites.collectionId).apply()
 

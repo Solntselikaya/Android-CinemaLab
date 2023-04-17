@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinemalab.data.remote.dto.toMovieModel
 import com.example.cinemalab.domain.model.MovieModel
-import com.example.cinemalab.domain.usecase.collection.GetCollectionMoviesUseCase
-import com.example.cinemalab.domain.usecase.collection.GetFavouritesCollectionIdUseCase
+import com.example.cinemalab.domain.usecase.collection.api.GetCollectionMoviesUseCase
+import com.example.cinemalab.domain.usecase.collection.api.GetFavouritesCollectionIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

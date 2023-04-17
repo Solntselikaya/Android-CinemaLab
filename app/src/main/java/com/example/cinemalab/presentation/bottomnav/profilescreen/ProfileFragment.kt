@@ -9,6 +9,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentProfileBinding
@@ -59,7 +60,25 @@ class ProfileFragment : Fragment() {
     }*/
 
     private fun setOnClickListeners() {
+        setOnEditClickListenerAvatar()
+        setOnChatsClickListener()
+        setOnExitClickListener()
+    }
+
+    private fun setOnEditClickListenerAvatar() {
         binding.editAvatar.setOnClickListener {
+
+        }
+    }
+
+    private fun setOnChatsClickListener() {
+        binding.grChats.setOnClickListener {
+            navigateToChatsActivity()
+        }
+    }
+
+    private fun setOnExitClickListener() {
+        binding.btLogout.setOnClickListener {
 
         }
     }
@@ -94,5 +113,10 @@ class ProfileFragment : Fragment() {
             viewModel.exitAlertDialog()
         }
         builder.show()
+    }
+
+    private fun navigateToChatsActivity() {
+        val action = ProfileFragmentDirections.actionProfileFragmentToChatsActivity2()
+        findNavController().navigate(action)
     }
 }

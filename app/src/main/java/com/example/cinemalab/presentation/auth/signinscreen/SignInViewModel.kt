@@ -8,13 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinemalab.R
 import com.example.cinemalab.common.Constants
-import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
-import com.example.cinemalab.data.remote.dto.LoginDto
+import com.example.cinemalab.data.remote.dto.*
+import com.example.cinemalab.domain.model.CollectionModel
 import com.example.cinemalab.domain.usecase.auth.LoginUseCase
-import com.example.cinemalab.domain.usecase.collection.GetCollectionsUseCase
+import com.example.cinemalab.domain.usecase.collection.api.GetCollectionsUseCase
+import com.example.cinemalab.domain.usecase.collection.api.GetFavouritesCollectionIdUseCase
+import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +25,9 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val loginUseCase: LoginUseCase,
-    private val getCollectionsUseCase: GetCollectionsUseCase
+    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val getFavouritesCollectionIdUseCase: GetFavouritesCollectionIdUseCase,
+    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
 ): ViewModel() {
 
     sealed class SignInState {
@@ -79,10 +84,8 @@ class SignInViewModel @Inject constructor(
                 saveTokenUseCase.execute(token)
 
                 val collections = getCollectionsUseCase()
-                val favString = context.getString(Constants.RESERVED_NAME_FAVOURITES)
-                val favCollection = collections.find { it.name == favString }
-                val sharedPrefs = context.getSharedPreferences(Constants.PREF_NAME_FAVOURITES_ID, Context.MODE_PRIVATE)
-                sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favCollection?.collectionId).apply()
+                saveFavId(collections)
+                rearrangeAndSaveToDbCollections(collections)
 
                 _state.value = SignInState.Success(token)
             } catch(ex: Exception) {
@@ -96,4 +99,29 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    private fun saveFavId(collections: List<CollectionDto>) {
+        val favString = context.getString(Constants.RESERVED_NAME_FAVOURITES)
+        val favCollection = collections.find { it.name == favString }
+        val sharedPrefs = context.getSharedPreferences(Constants.PREF_NAME_FAVOURITES_ID, Context.MODE_PRIVATE)
+        sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favCollection?.collectionId).apply()
+    }
+
+    private suspend fun rearrangeAndSaveToDbCollections(collections: List<CollectionDto>) {
+        val favId = getFavouritesCollectionIdUseCase()
+
+        val rearrangedCollections = mutableListOf<CollectionDto>()
+        val favCollection = collections.find { it.collectionId == favId }
+        if (favCollection != null) {
+            rearrangedCollections.add(favCollection)
+            addCollectionToDatabaseUseCase(favCollection.toCollectionEntity())
+        }
+        for(i in collections.indices){
+            if (collections[i].collectionId == favId)
+                continue
+            else{
+                rearrangedCollections.add(collections[i])
+                addCollectionToDatabaseUseCase(collections[i].toCollectionEntity())
+            }
+        }
+    }
 }

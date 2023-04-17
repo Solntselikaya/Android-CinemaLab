@@ -30,7 +30,7 @@ class CollectionsRecyclerAdapter(
     override fun getItemCount() = collections.size
 
     override fun onBindViewHolder(holder: CollectionsViewHolder, position: Int) {
-        holder.icon.setImageResource(R.drawable.collection_icon_heart)
+        holder.icon.setImageResource(collections[position].icon ?: R.drawable.collection_icon_01)
         holder.name.text = collections[position].name
 
         holder.item.setOnClickListener {

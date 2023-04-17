@@ -1,12 +1,17 @@
 package com.example.cinemalab.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.cinemalab.common.Constants
+import com.example.cinemalab.common.Constants.DATABASE_NAME
+import com.example.cinemalab.data.db.CollectionRoomDatabase
 import com.example.cinemalab.data.remote.*
 import com.example.cinemalab.data.repository.*
 import com.example.cinemalab.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -112,5 +117,53 @@ object AppModule {
     fun provideCollectionRepository(api: CollectionApi): CollectionRepository {
         return CollectionRepositoryImpl(api)
     }
+
+    @Provides
+    @Singleton
+    fun provideEpisodeApi(): EpisodeApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
+            .build()
+            .create(EpisodeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEpisodeRepository(api: EpisodeApi): EpisodeRepository {
+        return EpisodeRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatsInfoApi(): ChatsInfoApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
+            .build()
+            .create(ChatsInfoApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatsInfoRepository(api: ChatsInfoApi): ChatsInfoRepository {
+        return ChatsInfoRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        CollectionRoomDatabase::class.java,
+        DATABASE_NAME
+    ).build()
+
+    @Provides
+    @Singleton
+    fun provideDao(database: CollectionRoomDatabase) = database.collectionDao()
 
 }

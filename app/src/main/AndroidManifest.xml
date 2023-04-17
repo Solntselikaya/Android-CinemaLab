@@ -17,7 +17,10 @@
         android:theme="@style/splashScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".MovieActivity"
+            android:name=".presentation.chats.ChatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.movie.MovieActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.collectionactions.create.CollectionCreateActivity"
@@ -26,12 +29,10 @@
             android:name=".presentation.collectionactions.edit.CollectionEditActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.collectionactions.create.createcollectionscreen.CreateCollectionScreenActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.bottomnav.BottomNavActivity"
             android:exported="false"
-            android:label="@string/title_activity_bottom_nav" />
+            android:label="@string/title_activity_bottom_nav"
+            android:theme="@style/Theme.CinemaLab" />
         <activity
             android:name=".presentation.auth.AuthActivity"
             android:exported="true">

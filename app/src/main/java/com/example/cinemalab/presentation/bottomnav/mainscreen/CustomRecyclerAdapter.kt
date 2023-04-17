@@ -12,7 +12,8 @@ import com.example.cinemalab.domain.model.MovieModel
 
 class CustomRecyclerAdapter(
     private val movies: List<MovieModel>,
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val onClick: (MovieModel) -> Unit
 ) : RecyclerView.Adapter<CustomRecyclerAdapter.CustomViewHolder>() {
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,6 +30,9 @@ class CustomRecyclerAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         Glide.with(fragment).load(movies[position].poster).into(holder.cover)
+        holder.cover.setOnClickListener{
+            onClick(movies[position])
+        }
     }
 
 }

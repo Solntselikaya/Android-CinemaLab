@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvTagName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="@style/Theme.CinemaLab.body2"
+    android:textColor="@color/white"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="1dp"
+    android:background="@drawable/background_text"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"/>

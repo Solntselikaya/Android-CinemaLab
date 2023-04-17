@@ -1,4 +1,4 @@
-package com.example.cinemalab.domain.usecase.collection
+package com.example.cinemalab.domain.usecase.collection.api
 
 import android.content.Context
 import com.example.cinemalab.common.Constants

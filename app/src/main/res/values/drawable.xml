@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="exo_styled_controls_pause">@drawable/icon_stop</drawable>
+    <drawable name="exo_styled_controls_play">@drawable/icon_video_play</drawable>
+</resources>

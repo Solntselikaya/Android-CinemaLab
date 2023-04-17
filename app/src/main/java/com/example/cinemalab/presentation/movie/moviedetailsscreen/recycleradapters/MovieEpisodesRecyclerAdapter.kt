@@ -1,4 +1,4 @@
-package com.example.cinemalab.presentation.movie.moviedetailsscreen
+package com.example.cinemalab.presentation.movie.moviedetailsscreen.recycleradapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cinemalab.R
 import com.example.cinemalab.domain.model.EpisodeModel
-import com.example.cinemalab.domain.model.MovieModel
 
 class MovieEpisodesRecyclerAdapter(
-    private val episodes: List<EpisodeModel>
+    private val episodes: List<EpisodeModel>,
+    private val navigate: (EpisodeModel) -> Unit
 ) : RecyclerView.Adapter<MovieEpisodesRecyclerAdapter.MovieEpisodesViewHolder>() {
 
     class MovieEpisodesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,6 +20,7 @@ class MovieEpisodesRecyclerAdapter(
         val name: TextView = itemView.findViewById(R.id.tvEpisodeName)
         val description: TextView = itemView.findViewById(R.id.tvEpisodeDescription)
         val year: TextView = itemView.findViewById(R.id.tvYear)
+        val item: View = itemView.findViewById(R.id.itemEpisode)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieEpisodesViewHolder {
@@ -35,6 +36,8 @@ class MovieEpisodesRecyclerAdapter(
         holder.name.text = episodes[position].name
         holder.description.text = episodes[position].description
         holder.year.text = episodes[position].year
+
+        holder.item.setOnClickListener { navigate(episodes[position]) }
     }
 
 }
