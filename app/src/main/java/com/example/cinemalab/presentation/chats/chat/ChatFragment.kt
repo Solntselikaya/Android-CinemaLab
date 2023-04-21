@@ -22,15 +22,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChatFragment : Fragment() {
 
-    private var callback: MessengerListener? = null
+    private var callback: ChatListener? = null
 
-    interface MessengerListener {
+    interface ChatListener {
         fun onMessengerExit()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callback = activity as MovieActivity
+        callback = activity as ChatListener
     }
 
     private lateinit var binding: FragmentChatBinding
@@ -49,7 +49,6 @@ class ChatFragment : Fragment() {
             when (newState) {
                 ChatViewModel.ChatState.Initial -> {
                     hideLoading()
-                    setupChatName()
                 }
                 ChatViewModel.ChatState.Loading -> {
                     showLoading()
@@ -62,6 +61,7 @@ class ChatFragment : Fragment() {
                     hideLoading()
                     loadMessages()
                     setOnClickListeners()
+                    setupChatName()
                 }
             }
         }

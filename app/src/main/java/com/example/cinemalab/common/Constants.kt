@@ -14,6 +14,9 @@ object Constants {
     const val PREF_NAME_USER_EMAIL = "user_email"
     const val USER_EMAIL_KEY = "userEmail"
 
+    const val PREF_NAME_FIRST_RUN = "first_run"
+    const val FIRST_RUN_KEY = "firstRun"
+
     const val DATABASE_NAME = "collections"
 
 }

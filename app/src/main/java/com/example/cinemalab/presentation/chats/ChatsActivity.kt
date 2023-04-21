@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChatsActivity :
     AppCompatActivity(),
     ChatsListFragment.ChatsListListener,
-    ChatFragment.MessengerListener {
+    ChatFragment.ChatListener {
 
     //private val args: ChatsActivityArgs by navArgs()
 

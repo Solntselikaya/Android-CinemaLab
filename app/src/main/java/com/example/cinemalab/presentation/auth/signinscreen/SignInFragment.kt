@@ -79,13 +79,14 @@ class SignInFragment : Fragment() {
 
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            viewModel.checkIfFieldsIsValid(
+            viewModel.login(email, password)
+            /*viewModel.checkIfFieldsIsValid(
                 email,
                 password
-            )
+            )*/
 
-            if (viewModel.allFieldsIsValid.value == true)
-                viewModel.login(email, password)
+            /*if (viewModel.allFieldsIsValid.value == true)
+                viewModel.login(email, password)*/
         }
     }
 

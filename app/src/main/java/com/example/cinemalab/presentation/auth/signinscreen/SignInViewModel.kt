@@ -17,8 +17,11 @@ import com.example.cinemalab.domain.usecase.collection.api.GetCollectionsUseCase
 import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
 import com.example.cinemalab.domain.usecase.collection.storage.GetFavouritesCollectionIdUseCase
 import com.example.cinemalab.domain.usecase.collection.storage.SaveFavouritesCollectionIdInStorageUseCase
-import com.example.cinemalab.domain.usecase.storage.SaveUserEmailInStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.email.SaveUserEmailInStorageUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckEmailUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckEmptyFieldsUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckPasswordLengthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -32,7 +35,10 @@ class SignInViewModel @Inject constructor(
     private val getFavouritesCollectionIdUseCase: GetFavouritesCollectionIdUseCase,
     private val saveFavouritesCollectionIdInStorageUseCase: SaveFavouritesCollectionIdInStorageUseCase,
     private val saveUserEmailInStorageUseCase: SaveUserEmailInStorageUseCase,
-    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
+    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase,
+    private val checkEmailUseCase: CheckEmailUseCase,
+    private val checkPasswordLengthUseCase: CheckPasswordLengthUseCase,
+    private val checkEmptyFieldsUseCase: CheckEmptyFieldsUseCase
 ) : ViewModel() {
 
     sealed class SignInState {
@@ -45,35 +51,32 @@ class SignInViewModel @Inject constructor(
     private val _state = MutableLiveData<SignInState>(SignInState.Initial)
     var state: LiveData<SignInState> = _state
 
-    private val _allFieldsIsValid = MutableLiveData(true)
-    var allFieldsIsValid: LiveData<Boolean> = _allFieldsIsValid
-
     private val _validationErrorMessage = MutableLiveData("")
-    var validationErrorMessage: LiveData<String> = _validationErrorMessage
 
     fun exitAlertDialog() {
         _validationErrorMessage.value = ""
-        _allFieldsIsValid.value = true
         _state.value = SignInState.Initial
     }
 
-    fun checkIfFieldsIsValid(
+    private fun checkIfFieldsIsValid(
         email: String,
         password: String
     ) {
-        if (email.isBlank() || password.isBlank()) {
-            _validationErrorMessage.value += context.getString(R.string.fill_all_fields)
-        }
-        _allFieldsIsValid.value = isEmailValid(email) && password.isNotBlank()
-    }
+        _validationErrorMessage.value += checkEmptyFieldsUseCase(email, password)
 
-    private fun isEmailValid(email: String): Boolean {
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            _validationErrorMessage.value += context.getString(R.string.invalid_email_error_message)
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        if (_validationErrorMessage.value?.isBlank() == true) {
+            _validationErrorMessage.value += checkEmailUseCase(email)
+            _validationErrorMessage.value += checkPasswordLengthUseCase(password)
+        }
     }
 
     fun login(email: String, password: String) {
+
+        checkIfFieldsIsValid(email, password)
+        if (_validationErrorMessage.value?.isNotBlank() == true) {
+            _state.value = SignInState.Failure(_validationErrorMessage.value.toString())
+            return
+        }
 
         val body = LoginDto(
             email = email,

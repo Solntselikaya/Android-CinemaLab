@@ -10,17 +10,18 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentChatsListBinding
 import com.example.cinemalab.domain.model.ChatModel
+import com.example.cinemalab.domain.model.ShortChatInfoModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChatsListFragment : Fragment() {
 
     private var callback: ChatsListListener? = null
-    //private var chatInfo: ChatModel? = null
 
     interface ChatsListListener {
         fun onChatsListExit()
@@ -29,8 +30,6 @@ class ChatsListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = activity as ChatsListListener
-        //val activity: ChatsActivity? = activity as ChatsActivity?
-        //chatInfo = activity?.getChatsList()
     }
 
     private lateinit var binding: FragmentChatsListBinding
@@ -100,7 +99,12 @@ class ChatsListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         binding.rvChats.layoutManager = layoutManager
-        binding.rvChats.adapter = ChatsRecyclerAdapter(chats)
+        binding.rvChats.adapter = ChatsRecyclerAdapter(chats) { navigateToChat(it) }
+    }
+
+    private fun navigateToChat(chatInfo: ShortChatInfoModel) {
+        val action = ChatsListFragmentDirections.actionChatsListFragmentToMessengerFragment(chatInfo)
+        findNavController().navigate(action)
     }
 
 }

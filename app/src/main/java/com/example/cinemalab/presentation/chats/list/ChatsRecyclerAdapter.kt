@@ -10,11 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemalab.R
 import com.example.cinemalab.domain.model.ChatModel
-
+import com.example.cinemalab.domain.model.ShortChatInfoModel
+import com.example.cinemalab.domain.model.toShortChatInfoModel
 
 class ChatsRecyclerAdapter(
     private val chats: List<ChatModel>,
-    //private val onItemClick: (ChatModel) -> Unit,
+    private val onItemClick: (ShortChatInfoModel) -> Unit,
 ) : RecyclerView.Adapter<ChatsRecyclerAdapter.ChatsViewHolder>() {
 
     class ChatsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,7 +50,7 @@ class ChatsRecyclerAdapter(
         holder.lastMessage.text = spannable
 
         holder.item.setOnClickListener {
-            //onItemClick(chats[position])
+            onItemClick(chats[position].toShortChatInfoModel())
         }
     }
 

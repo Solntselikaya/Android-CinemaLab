@@ -13,7 +13,7 @@ import com.example.cinemalab.domain.model.toCollectionEntity
 import com.example.cinemalab.domain.usecase.collection.api.DeleteCollectionUseCase
 import com.example.cinemalab.domain.usecase.collection.db.DeleteCollectionFromDatabaseUseCase
 import com.example.cinemalab.domain.usecase.collection.db.UpdateCollectionInDatabaseUseCase
-import com.example.cinemalab.domain.usecase.storage.GetUserEmailFromStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.email.GetUserEmailFromStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch

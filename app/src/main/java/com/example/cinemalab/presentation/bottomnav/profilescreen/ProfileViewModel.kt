@@ -9,7 +9,7 @@ import com.example.cinemalab.data.remote.dto.ProfileInfoDto
 import com.example.cinemalab.domain.usecase.collection.db.DeleteAllUserCollectionsFromDatabaseUseCase
 import com.example.cinemalab.domain.usecase.profile.GetProfileInfoUseCase
 import com.example.cinemalab.domain.usecase.profile.PostUserAvatarUseCase
-import com.example.cinemalab.domain.usecase.storage.GetUserEmailFromStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.email.GetUserEmailFromStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers

@@ -51,8 +51,9 @@
     <!-- Error messages -->
     <string name="input_incorrect">Ошибка</string>
     <string name="fill_all_fields">Заполните все поля</string>
-    <string name="invalid_email_error_message">\nНекорректный e-mail</string>
-    <string name="passwords_are_not_equel">Пароли не совпадают</string>
+    <string name="invalid_email_error_message">Некорректный e-mail\n</string>
+    <string name="passwords_are_not_equel">Пароли не совпадают\n</string>
+    <string name="password_too_short">Пароль слишком короткий\n</string>
     <string name="error_something_went_wrong">Что-то пошло не так</string>
     <string name="error_user_already_exists">Почта уже занята</string>
     <string name="invalid_email_or_password">Неверные логин или пароль</string>

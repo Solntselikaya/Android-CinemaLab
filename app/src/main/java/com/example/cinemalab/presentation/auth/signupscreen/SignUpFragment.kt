@@ -9,10 +9,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
@@ -45,6 +47,13 @@ class SignUpFragment : Fragment() {
                 is SignUpViewModel.SignUpState.Success -> {
                     binding.progressBar.isVisible = false
                     navigateToMainScreen()
+                }
+                SignUpViewModel.SignUpState.Navigate -> {
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.signInFragment, true)
+                        .build()
+                    val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
+                    findNavController().navigate(action, navOptions)
                 }
             }
         }

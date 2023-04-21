@@ -15,7 +15,9 @@ import com.example.cinemalab.data.remote.dto.toCollectionEntity
 import com.example.cinemalab.domain.usecase.auth.RegistrationUseCase
 import com.example.cinemalab.domain.usecase.collection.api.CreateCollectionUseCase
 import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
-import com.example.cinemalab.domain.usecase.storage.SaveUserEmailInStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.email.SaveUserEmailInStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.firstrun.GetFirstRunFromStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.firstrun.SaveFirstRunInStorageUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -28,7 +30,9 @@ class SignUpViewModel @Inject constructor(
     private val registrationUseCase: RegistrationUseCase,
     private val createCollectionUseCase: CreateCollectionUseCase,
     private val saveUserEmailInStorageUseCase: SaveUserEmailInStorageUseCase,
-    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
+    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase,
+    private val getFirstRunFromStorageUseCase: GetFirstRunFromStorageUseCase,
+    private val saveFirstRunInStorageUseCase: SaveFirstRunInStorageUseCase
 ) : ViewModel() {
 
     sealed class SignUpState {
@@ -36,6 +40,7 @@ class SignUpViewModel @Inject constructor(
         object Loading : SignUpState()
         class Failure(val errorMessage: String) : SignUpState()
         class Success(val tokenResponse: AuthTokenPairDto) : SignUpState()
+        object Navigate: SignUpState()
     }
 
     private val _state = MutableLiveData<SignUpState>(SignUpState.Initial)
@@ -46,6 +51,18 @@ class SignUpViewModel @Inject constructor(
 
     private val _validationErrorMessage = MutableLiveData("")
     var validationErrorMessage: LiveData<String> = _validationErrorMessage
+
+    init {
+        checkIfFirstRun()
+    }
+
+    private fun checkIfFirstRun() {
+        if (getFirstRunFromStorageUseCase()) {
+            _state.value = SignUpState.Navigate
+        } else {
+            saveFirstRunInStorageUseCase()
+        }
+    }
 
     fun exitAlertDialog() {
         _validationErrorMessage.value = ""

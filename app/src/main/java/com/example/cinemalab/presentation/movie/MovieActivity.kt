@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MovieActivity :
     AppCompatActivity(),
     MovieDetailsFragment.MovieDetailsListener,
-    ChatFragment.MessengerListener {
+    ChatFragment.ChatListener {
 
     private val args: MovieActivityArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {

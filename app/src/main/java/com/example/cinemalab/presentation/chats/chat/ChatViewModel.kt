@@ -81,7 +81,6 @@ class ChatViewModel @Inject constructor(
             } catch (ex: Exception) {
                 _state.value = ChatState.Failure(ex.message.toString())
             }
-
         }
     }
 
