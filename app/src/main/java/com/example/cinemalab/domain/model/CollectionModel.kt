@@ -10,12 +10,13 @@ data class CollectionModel(
     val id: String,
     val name: String,
     val icon: Int? = R.drawable.collection_icon_01
-): Parcelable
+) : Parcelable
 
-fun CollectionModel.toCollectionEntity(): CollectionEntity {
+fun CollectionModel.toCollectionEntity(userId: String): CollectionEntity {
     return CollectionEntity(
-        id = id,
+        collectionId = id,
         name = name,
-        icon = icon
+        icon = icon,
+        userId = userId
     )
 }

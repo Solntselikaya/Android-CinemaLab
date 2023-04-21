@@ -30,7 +30,7 @@ class SignInFragment : Fragment() {
 
         setOnButtonsClickListeners()
         val stateObserver = Observer<SignInViewModel.SignInState> { newState ->
-            when(newState) {
+            when (newState) {
                 SignInViewModel.SignInState.Initial -> {
                     binding.progressBar.isVisible = false
                     binding.btSignIn.isEnabled = true
@@ -44,6 +44,11 @@ class SignInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.start()
     }
 
     private fun showLoading() {
@@ -97,9 +102,6 @@ class SignInFragment : Fragment() {
     private fun navigateToMainScreen() {
         binding.progressBar.isVisible = false
         findNavController().navigate(R.id.action_signInFragment_to_bottomNavActivity2)
-
-        /*val intent = Intent(this@SignInFragment.requireContext(), BottomNavActivity::class.java)
-        startActivity(intent)*/
     }
 
 }

@@ -17,7 +17,7 @@ data class MovieDto(
 
 fun MovieDto.toMovieModel(): MovieModel {
 
-    val ageAsEnum = when(age) {
+    val ageAsEnum = when (age) {
         "18+" -> AgeLimitEnum.Eighteen
         "16+" -> AgeLimitEnum.Sixteen
         "12+" -> AgeLimitEnum.Twelve

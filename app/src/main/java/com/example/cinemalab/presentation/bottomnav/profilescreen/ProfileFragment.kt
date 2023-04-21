@@ -1,10 +1,13 @@
 package com.example.cinemalab.presentation.bottomnav.profilescreen
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,10 +16,23 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentProfileBinding
+import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
+
+    private var callback: ProfileListener? = null
+
+    interface ProfileListener {
+        fun onLogout()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = activity as ProfileListener
+    }
 
     private lateinit var binding: FragmentProfileBinding
     private val viewModel: ProfileViewModel by viewModels()
@@ -31,7 +47,7 @@ class ProfileFragment : Fragment() {
         setOnClickListeners()
 
         val stateObserver = Observer<ProfileViewModel.ProfileState> { newState ->
-            when(newState) {
+            when (newState) {
                 ProfileViewModel.ProfileState.Initial -> Unit
                 ProfileViewModel.ProfileState.Loading -> showLoading()
                 is ProfileViewModel.ProfileState.Failure -> {
@@ -54,20 +70,38 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    private val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val data = result.data
+
+            if (data?.data != null) {
+                val fileUri = data.data
+                val file = File(fileUri?.path)
+                viewModel.loadProfileImage(file)
+                binding.avatar.setImageURI(fileUri)
+            }
+            //binding.avatar.setImageURI(fileUri)
+
+        }
+
     /*override fun onStart() {
-        viewModel.
+        viewModel.getProfileInfo()
         super.onStart()
     }*/
 
     private fun setOnClickListeners() {
-        setOnEditClickListenerAvatar()
+        setOnEditAvatarClickListener()
         setOnChatsClickListener()
         setOnExitClickListener()
     }
 
-    private fun setOnEditClickListenerAvatar() {
+    private fun setOnEditAvatarClickListener() {
         binding.editAvatar.setOnClickListener {
-
+            ImagePicker.with(this)
+                .cropSquare()
+                .createIntent { intent ->
+                    startForProfileImageResult.launch(intent)
+                }
         }
     }
 
@@ -79,7 +113,8 @@ class ProfileFragment : Fragment() {
 
     private fun setOnExitClickListener() {
         binding.btLogout.setOnClickListener {
-
+            viewModel.logout()
+            callback?.onLogout()
         }
     }
 

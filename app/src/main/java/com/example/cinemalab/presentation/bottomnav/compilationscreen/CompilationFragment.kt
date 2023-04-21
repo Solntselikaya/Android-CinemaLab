@@ -42,7 +42,7 @@ class CompilationFragment : Fragment(), CardStackListener {
         setOnButtonClickListeners()
 
         val stateObserver = Observer<CompilationViewModel.CompilationState> { newState ->
-            when(newState) {
+            when (newState) {
                 CompilationViewModel.CompilationState.Initial -> {
                     showPlug()
                 }
@@ -54,11 +54,10 @@ class CompilationFragment : Fragment(), CardStackListener {
                 }
                 is CompilationViewModel.CompilationState.Success -> {
                     hideLoading()
-                    if(newState.compilation.isEmpty()) {
+                    if (newState.compilation.isEmpty()) {
                         showPlug()
                         binding.grContent.isGone = true
-                    }
-                    else {
+                    } else {
                         setupCardStackView(newState.compilation)
                     }
                 }
@@ -108,10 +107,10 @@ class CompilationFragment : Fragment(), CardStackListener {
     private fun setOnDismissButtonClickListener() {
         binding.btDismiss.setOnClickListener {
             val swipeSettings = SwipeAnimationSetting.Builder()
-            .setDirection(Direction.Left)
-            .setDuration(Duration.Slow.duration)
-            .setInterpolator(LinearInterpolator())
-            .build()
+                .setDirection(Direction.Left)
+                .setDuration(Duration.Slow.duration)
+                .setInterpolator(LinearInterpolator())
+                .build()
             cardManager.setSwipeAnimationSetting(swipeSettings)
             binding.csvCompilation.swipe()
         }
@@ -165,7 +164,7 @@ class CompilationFragment : Fragment(), CardStackListener {
     }
 
     override fun onCardSwiped(direction: Direction?) {
-        if(direction == Direction.Right) {
+        if (direction == Direction.Right) {
             viewModel.addCurrMovieToFavorites()
         }
         viewModel.dislikeCurrMovie()

@@ -1,6 +1,7 @@
 package com.example.cinemalab.data.db.dao
 
 import androidx.room.*
+import com.example.cinemalab.common.Constants.DATABASE_NAME
 import com.example.cinemalab.data.db.entities.CollectionEntity
 
 @Dao
@@ -12,12 +13,15 @@ interface CollectionDao {
     @Update
     suspend fun updateCollection(collection: CollectionEntity)
 
-    @Query("SELECT * FROM collections")
-    fun getAll(): List<CollectionEntity>
+    @Query("SELECT * FROM $DATABASE_NAME WHERE user_id = :userId")
+    fun getAllForUser(userId: String): List<CollectionEntity>
 
-    @Delete
-    suspend fun delete(collection: CollectionEntity)
+    @Query("DELETE FROM $DATABASE_NAME WHERE collection_id = :collectionId")
+    suspend fun delete(collectionId: String)
 
-    @Query("DELETE FROM collections")
+    @Query("DELETE FROM $DATABASE_NAME WHERE user_id = :userId")
+    suspend fun deleteAllForUser(userId: String)
+
+    @Query("DELETE FROM $DATABASE_NAME")
     suspend fun deleteAll()
 }

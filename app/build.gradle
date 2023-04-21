@@ -95,5 +95,6 @@ dependencies {
     implementation 'androidx.media3:media3-ui:1.0.0'
 
     //For image loading
-    //implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+
 }

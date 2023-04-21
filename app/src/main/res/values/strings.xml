@@ -36,10 +36,17 @@
     <string name="episodes">Эпизоды</string>
     <string name="chats">Обсуждения</string>
     <string name="write_a_message">Напишите сообщение...</string>
+    <string name="today">Сегодня</string>
+    <string name="in_trend">В тренде</string>
+    <string name="you_watched">Вы смотрели</string>
+    <string name="new_movies">Новое</string>
+    <string name="for_you">Для вас</string>
+    <string name="select_interests">Указать интересы</string>
 
     <!-- Strings with args -->
     <string name="name_and_surname">%1$s %2$s</string>
-    <string name="name_and_dots">%1$s: </string>
+    <string name="name_and_dots">%1$s:&#160;</string>
+    <string name="username_and_time">%1$s • %2$s</string>
 
     <!-- Error messages -->
     <string name="input_incorrect">Ошибка</string>
@@ -53,11 +60,14 @@
     <string name="try_to_use_empty_collection_name_error_message">Имя коллекции не заполнено! \nПожалуйста, укажите имя</string>
 
     <!-- HTTP error status codes -->
-    <string name="exception_http_409">HTTP 409 Conflict</string>
     <string name="exception_http_401">HTTP 401 Unauthorized</string>
+    <string name="exception_http_403">HTTP 403 Forbidden</string>
+    <string name="exception_http_409">HTTP 409 Conflict</string>
+    <string name="exception_http_422">HTTP 422 Validation Error</string>
+    <string name="exception_http_500">HTTP 500 Internal Server Error</string>
 
     <!-- Image descriptions -->
-    <string name="description_logo">logo</string>
+    <string name="description_logo">Logo</string>
     <string name="cd_promoted_movie_poster">Promoted movie poster</string>
 
     <!-- Age limit strings -->
@@ -66,6 +76,5 @@
     <string name="age_limit_12">12+</string>
     <string name="age_limit_6">6+</string>
     <string name="age_limit_0">0+</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

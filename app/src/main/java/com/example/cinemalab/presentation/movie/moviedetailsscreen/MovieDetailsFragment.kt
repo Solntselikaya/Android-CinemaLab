@@ -32,19 +32,25 @@ import dagger.hilt.android.AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
     private var callback: MovieDetailsListener? = null
+
     interface MovieDetailsListener {
         fun onMovieDetailsBackPressed()
     }
 
+    private var movieInfo: MovieModel? = null
+    private var episodeId: String? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = activity as MovieDetailsListener
+
+        val activity: MovieActivity? = activity as MovieActivity?
+        movieInfo = activity?.getMovieModel()
+        episodeId = activity?.getEpisodeId()
     }
 
     private lateinit var binding: FragmentMovieDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModels()
-
-    private var movieInfo: MovieModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,16 +59,16 @@ class MovieDetailsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
         binding = FragmentMovieDetailsBinding.bind(view)
 
-        val activity: MovieActivity? = activity as MovieActivity?
-        movieInfo = activity?.getMovieModel()
-
         setOnClickListeners()
 
         val stateObserver = Observer<MovieDetailsViewModel.MovieDetailsState> { newState ->
-            when(newState) {
+            when (newState) {
                 MovieDetailsViewModel.MovieDetailsState.Initial -> {
                     hideLoading()
-                    viewModel.getMovieEpisodes(movieInfo?.movieId ?: "")
+                    viewModel.getMovieEpisodes(
+                        movieInfo?.movieId ?: "",
+                        episodeId
+                    )
                 }
                 MovieDetailsViewModel.MovieDetailsState.Loading -> {
                     showLoading()
@@ -83,6 +89,21 @@ class MovieDetailsFragment : Fragment() {
                         movieInfo?.imageUrls ?: emptyList(),
                         newState.episodes
                     )
+
+                    binding.btGoWatch.setOnClickListener {
+                        navigateToEpisodeScreen(newState.episodes.first())
+                    }
+                }
+                is MovieDetailsViewModel.MovieDetailsState.Navigate -> {
+                    if (episodeId == null) {
+                        viewModel.getMovieEpisodes(
+                            movieInfo?.movieId ?: "",
+                            episodeId
+                        )
+                    } else {
+                        episodeId = null
+                        navigateToEpisodeScreen(newState.episodeInfo)
+                    }
                 }
             }
         }
@@ -111,7 +132,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setOnClickListeners() {
         setOnBackButtonClickListener()
-        setOnWatchButtonClickListener()
+        //setOnWatchButtonClickListener()
         setOnChatsButtonClickListener()
     }
 
@@ -121,11 +142,11 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    private fun setOnWatchButtonClickListener() {
+    /*private fun setOnWatchButtonClickListener() {
         binding.btGoWatch.setOnClickListener {
-
+            navigateToEpisodeScreen()
         }
-    }
+    }*/
 
     private fun setOnChatsButtonClickListener() {
         binding.btChats.setOnClickListener {
@@ -152,20 +173,20 @@ class MovieDetailsFragment : Fragment() {
         frames: List<String>,
         episodes: List<EpisodeModel>
     ) {
-        if(tags.isNotEmpty()) {
+        if (tags.isNotEmpty()) {
             setupTagsRecyclerView(tags)
         } else {
             binding.rvTags.isGone = true
         }
 
-        if(frames.isNotEmpty()) {
+        if (frames.isNotEmpty()) {
             setupFragmentsRecyclerView(frames)
         } else {
             binding.tvFramesHeader.isGone = true
             binding.rvFrames.isGone = true
         }
 
-        if(episodes.isNotEmpty()){
+        if (episodes.isNotEmpty()) {
             setupEpisodesRecyclerView(episodes)
         } else {
             binding.tvEpisodesHeader.isGone = true
@@ -194,19 +215,25 @@ class MovieDetailsFragment : Fragment() {
         binding.rvEpisodes.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        binding.rvEpisodes.adapter = MovieEpisodesRecyclerAdapter(episodes) { navigateToEpisodeScreen(it) }
+        binding.rvEpisodes.adapter =
+            MovieEpisodesRecyclerAdapter(episodes) { navigateToEpisodeScreen(it) }
     }
 
     private fun navigateToEpisodeScreen(episodeInfo: EpisodeModel) {
         val movieModel = movieInfo?.toMovieShortModel() ?: MovieShortModel("", "", "", null)
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToEpisodeFragment(movieModel, episodeInfo)
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToEpisodeFragment(
+            movieModel,
+            episodeInfo
+        )
         findNavController().navigate(action)
     }
 
     private fun navigateToMessengerScreen() {
         val emptyInfo = ShortChatInfoModel("Undefined", "Undefined")
-        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMessengerFragment2(movieInfo?.chatInfo?.toShortChatInfoModel()
-            ?: emptyInfo)
+        val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMessengerFragment2(
+            movieInfo?.chatInfo?.toShortChatInfoModel()
+                ?: emptyInfo
+        )
         findNavController().navigate(action)
     }
 

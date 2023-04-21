@@ -12,11 +12,17 @@ data class MessageDto(
 )
 
 fun MessageDto.toMessageModel(): MessageModel {
+    val creationDate = creationDateTime.substringBefore("T")
+
+    val creationTimeElements = creationDateTime.substringAfter("T").split(':')
+    val creationTime = creationTimeElements[0] + ":" + creationTimeElements[1]
+
     return MessageModel(
         authorAvatar = authorAvatar,
         authorId = authorId,
         authorName = authorName,
-        creationDateTime = creationDateTime,
+        creationDate = creationDate,
+        creationTime = creationTime,
         text = text
     )
 }

@@ -12,6 +12,7 @@ import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.toCollectionEntity
 import com.example.cinemalab.domain.usecase.collection.api.CreateCollectionUseCase
 import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
+import com.example.cinemalab.domain.usecase.storage.GetUserEmailFromStorageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -22,14 +23,15 @@ import javax.inject.Inject
 class CreateCollectionViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val createCollectionUseCase: CreateCollectionUseCase,
-    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
+    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase,
+    private val getUserEmailFromStorageUseCase: GetUserEmailFromStorageUseCase
 ) : ViewModel() {
 
     sealed class CreateCollectionState {
-        object Initial: CreateCollectionState()
-        object Loading: CreateCollectionState()
-        object Success: CreateCollectionState()
-        class Failure(val errorMessage: String): CreateCollectionState()
+        object Initial : CreateCollectionState()
+        object Loading : CreateCollectionState()
+        object Success : CreateCollectionState()
+        class Failure(val errorMessage: String) : CreateCollectionState()
     }
 
     private val _state = MutableLiveData<CreateCollectionState>(CreateCollectionState.Initial)
@@ -42,13 +44,15 @@ class CreateCollectionViewModel @Inject constructor(
         icon: Int?
     ) {
 
-        if(name == context.getString(Constants.RESERVED_NAME_FAVOURITES)) {
-            _state.value = CreateCollectionState.Failure(context.getString(R.string.try_to_use_reserved_name_error_message))
+        if (name == context.getString(Constants.RESERVED_NAME_FAVOURITES)) {
+            _state.value =
+                CreateCollectionState.Failure(context.getString(R.string.try_to_use_reserved_name_error_message))
             return
         }
 
-        if(name.isBlank()) {
-            _state.value = CreateCollectionState.Failure(context.getString(R.string.try_to_use_empty_collection_name_error_message))
+        if (name.isBlank()) {
+            _state.value =
+                CreateCollectionState.Failure(context.getString(R.string.try_to_use_empty_collection_name_error_message))
             return
         }
 
@@ -57,10 +61,12 @@ class CreateCollectionViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val newCollection = createCollectionUseCase(CollectionNameDto(name))
-                addToDatabase(newCollection.toCollectionEntity(icon))
-                while (dbIsNotReady) {}
+                val userEmail = getUserEmailFromStorageUseCase()
+                addToDatabase(newCollection.toCollectionEntity(userEmail, icon))
+                while (dbIsNotReady) {
+                }
                 _state.value = CreateCollectionState.Success
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = CreateCollectionState.Failure(ex.message.toString())
             }
         }

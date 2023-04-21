@@ -13,7 +13,7 @@ data class MovieModel(
     val name: String,
     val poster: String,
     val tags: List<TagModel>
-): Parcelable
+) : Parcelable
 
 fun MovieModel.toMovieShortModel(): MovieShortModel {
     return MovieShortModel(

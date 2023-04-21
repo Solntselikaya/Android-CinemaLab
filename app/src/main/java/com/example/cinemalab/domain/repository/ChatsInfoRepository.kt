@@ -1,6 +1,7 @@
 package com.example.cinemalab.domain.repository
 
-import com.example.cinemalab.data.remote.dto.*
+import com.example.cinemalab.data.remote.dto.ChatDto
+import com.example.cinemalab.data.remote.dto.ChatInfoDto
 
 interface ChatsInfoRepository {
 

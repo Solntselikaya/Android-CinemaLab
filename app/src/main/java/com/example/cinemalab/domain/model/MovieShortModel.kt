@@ -9,4 +9,4 @@ data class MovieShortModel(
     val poster: String,
     val name: String,
     val chatInfo: ChatModel? = null
-): Parcelable
+) : Parcelable

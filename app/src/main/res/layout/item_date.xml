@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/transparent"
+    app:cardElevation="0dp">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/background_chat_date"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="7dp"
+        android:textAppearance="@style/Theme.CinemaLab.body2"
+        android:textColor="@color/white" />
+
+</androidx.cardview.widget.CardView>

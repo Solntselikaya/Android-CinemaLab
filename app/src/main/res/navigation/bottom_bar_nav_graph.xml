@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.cinemalab.presentation.bottomnav.profilescreen.ProfileFragment"
-        android:label="Profile" >
+        android:label="Profile">
         <action
             android:id="@+id/action_profileFragment_to_chatsActivity2"
             app:destination="@id/chatsActivity2"
@@ -17,14 +17,13 @@
     <fragment
         android:id="@+id/collectionsFragment"
         android:name="com.example.cinemalab.presentation.bottomnav.collectionsscreen.CollectionsFragment"
-        android:label="Collections" >
-        <action
-            android:id="@+id/action_collectionsFragment_to_collectionActionsActivity"
-            app:destination="@id/collectionEditActivity"
-            app:launchSingleTop="true" />
+        android:label="Collections">
         <action
             android:id="@+id/action_collectionsFragment_to_collectionCreateActivity"
             app:destination="@id/collectionCreateActivity" />
+        <action
+            android:id="@+id/action_collectionsFragment_to_collectionEditActivity"
+            app:destination="@id/collectionEditActivity" />
     </fragment>
     <fragment
         android:id="@+id/compilationFragment"
@@ -33,20 +32,11 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.cinemalab.presentation.bottomnav.mainscreen.MainFragment"
-        android:label="Main" >
+        android:label="Main">
         <action
             android:id="@+id/action_mainFragment_to_movieActivity"
             app:destination="@id/movieActivity" />
     </fragment>
-    <activity
-        android:id="@+id/collectionEditActivity"
-        android:name="com.example.cinemalab.presentation.collectionactions.edit.CollectionEditActivity"
-        android:label="activity_collection_actions"
-        tools:layout="@layout/activity_collection_edit" >
-        <argument
-            android:name="collectionModel"
-            app:argType="com.example.cinemalab.domain.model.CollectionModel" />
-    </activity>
     <activity
         android:id="@+id/collectionCreateActivity"
         android:name="com.example.cinemalab.presentation.collectionactions.create.CollectionCreateActivity"
@@ -56,14 +46,28 @@
         android:id="@+id/movieActivity"
         android:name="com.example.cinemalab.presentation.movie.MovieActivity"
         android:label="activity_movie"
-        tools:layout="@layout/activity_movie" >
+        tools:layout="@layout/activity_movie">
         <argument
             android:name="movieInfo"
             app:argType="com.example.cinemalab.domain.model.MovieModel" />
+        <argument
+            android:name="episodeId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </activity>
     <activity
         android:id="@+id/chatsActivity2"
         android:name="com.example.cinemalab.presentation.chats.ChatsActivity"
         android:label="activity_chats"
         tools:layout="@layout/activity_chats" />
+    <activity
+        android:id="@+id/collectionEditActivity"
+        android:name="com.example.cinemalab.presentation.collectionactions.edit.CollectionEditActivity"
+        android:label="activity_collection_edit"
+        tools:layout="@layout/activity_collection_edit">
+        <argument
+            android:name="collectionInfo"
+            app:argType="com.example.cinemalab.domain.model.CollectionModel" />
+    </activity>
 </navigation>

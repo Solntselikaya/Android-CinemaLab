@@ -3,7 +3,6 @@ package com.example.cinemalab.domain.usecase.episode
 import android.content.Context
 import com.example.cinemalab.data.remote.dto.EpisodeTimeDto
 import com.example.cinemalab.domain.repository.EpisodeRepository
-import com.example.cinemalab.domain.repository.MovieRepository
 import com.example.cinemalab.domain.usecase.token.GetTokenFromLocalStorageUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

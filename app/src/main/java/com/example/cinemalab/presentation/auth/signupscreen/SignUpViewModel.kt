@@ -11,8 +11,11 @@ import com.example.cinemalab.common.Constants
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.RegistrationBodyDto
+import com.example.cinemalab.data.remote.dto.toCollectionEntity
 import com.example.cinemalab.domain.usecase.auth.RegistrationUseCase
 import com.example.cinemalab.domain.usecase.collection.api.CreateCollectionUseCase
+import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
+import com.example.cinemalab.domain.usecase.storage.SaveUserEmailInStorageUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -23,14 +26,16 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val registrationUseCase: RegistrationUseCase,
-    private val createCollectionUseCase: CreateCollectionUseCase
-): ViewModel() {
+    private val createCollectionUseCase: CreateCollectionUseCase,
+    private val saveUserEmailInStorageUseCase: SaveUserEmailInStorageUseCase,
+    private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
+) : ViewModel() {
 
     sealed class SignUpState {
-        object Initial: SignUpState()
-        object Loading: SignUpState()
-        class Failure(val errorMessage: String): SignUpState()
-        class Success(val tokenResponse: AuthTokenPairDto): SignUpState()
+        object Initial : SignUpState()
+        object Loading : SignUpState()
+        class Failure(val errorMessage: String) : SignUpState()
+        class Success(val tokenResponse: AuthTokenPairDto) : SignUpState()
     }
 
     private val _state = MutableLiveData<SignUpState>(SignUpState.Initial)
@@ -56,11 +61,11 @@ class SignUpViewModel @Inject constructor(
         passwordRepeat: String
     ) {
         _allFieldsIsValid.value =
-                isSomeFieldsEmpty(name, surname, email, password)
-                && isEmailValid(email)
-                && isPasswordValid(password, passwordRepeat)
+            isSomeFieldsEmpty(name, surname, email, password)
+                    && isEmailValid(email)
+                    && isPasswordValid(password, passwordRepeat)
 
-        if(_allFieldsIsValid.value == false)
+        if (_allFieldsIsValid.value == false)
             _state.value = SignUpState.Failure(_validationErrorMessage.value!!)
     }
 
@@ -120,13 +125,22 @@ class SignUpViewModel @Inject constructor(
 
                 val saveTokenUseCase = SaveTokenUseCase(context)
                 saveTokenUseCase.execute(token)
-                
-                val favourites = createCollectionUseCase(CollectionNameDto(context.getString(R.string.favourites)))
-                val sharedPrefs = context.getSharedPreferences(Constants.PREF_NAME_FAVOURITES_ID, Context.MODE_PRIVATE)
-                sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favourites.collectionId).apply()
+
+                saveUserEmailInStorageUseCase(email)
+
+                val favourites =
+                    createCollectionUseCase(CollectionNameDto(context.getString(R.string.favourites)))
+                val sharedPrefs = context.getSharedPreferences(
+                    Constants.PREF_NAME_FAVOURITES_ID,
+                    Context.MODE_PRIVATE
+                )
+                sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favourites.collectionId)
+                    .apply()
+
+                addCollectionToDatabaseUseCase(favourites.toCollectionEntity(email))
 
                 _state.value = SignUpState.Success(token)
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = SignUpState.Failure(
                     when (ex.message) {
                         context.getString(R.string.exception_http_409) -> context.getString(R.string.error_user_already_exists)

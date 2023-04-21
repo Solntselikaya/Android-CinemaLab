@@ -11,11 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.annotation.GlideModule
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentMainBinding
+import com.example.cinemalab.domain.model.HistoryModel
 import com.example.cinemalab.domain.model.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.bind(view)
 
         val stateObserver = Observer<MainViewModel.MainState> { newState ->
-            when(newState) {
+            when (newState) {
                 MainViewModel.MainState.Initial -> hideLoading()
                 MainViewModel.MainState.Loading -> showLoading()
                 is MainViewModel.MainState.Failure ->
@@ -52,7 +52,10 @@ class MainFragment : Fragment() {
                         newState.moviesForMe
                     )
 
-                    setupLastWatched(newState.lastWatchedMovie)
+                    setupLastWatched(
+                        newState.lastWatchedMovie,
+                        newState.lastWatchedEpisodes
+                    )
                 }
             }
         }
@@ -90,73 +93,92 @@ class MainFragment : Fragment() {
         moviesNew: List<MovieModel>,
         moviesForYou: List<MovieModel>
     ) {
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         if (moviesTrend.isNotEmpty()) {
             setupMoviesTrendRecyclerView(
-                layoutManager,
                 moviesTrend
             )
-        }
-        else {
+        } else {
             binding.rvTrends.isGone = true
             binding.tvMoviesTrend.isGone = true
         }
 
         if (moviesNew.isNotEmpty()) {
             setupMoviesNewRecyclerView(
-                layoutManager,
                 moviesNew
             )
-        }
-        else {
+        } else {
             binding.rvNewMovies.isGone = true
             binding.tvMoviesNew.isGone = true
         }
 
         if (moviesForYou.isNotEmpty()) {
             setupMoviesForYouRecyclerView(
-                layoutManager,
                 moviesForYou
             )
-        }
-        else {
+        } else {
             binding.rvMoviesForYou.isGone = true
             binding.tvMoviesForYou.isGone = true
         }
     }
 
     private fun setupMoviesTrendRecyclerView(
-        layoutManager: LayoutManager,
         movies: List<MovieModel>
     ) {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         binding.rvTrends.layoutManager = layoutManager
-        binding.rvTrends.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
+        binding.rvTrends.adapter = CustomRecyclerAdapter(
+            R.layout.item_movie_cover_small,
+            movies,
+            this
+        ) { openMovieDetails(it) }
     }
 
     private fun setupMoviesNewRecyclerView(
-        layoutManager: LayoutManager,
         movies: List<MovieModel>
     ) {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         binding.rvNewMovies.layoutManager = layoutManager
-        binding.rvNewMovies.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
+        binding.rvNewMovies.adapter = CustomRecyclerAdapter(
+            R.layout.item_movie_cover_large,
+            movies,
+            this
+        ) { openMovieDetails(it) }
     }
 
     private fun setupMoviesForYouRecyclerView(
-        layoutManager: LayoutManager,
         movies: List<MovieModel>
     ) {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         binding.rvMoviesForYou.layoutManager = layoutManager
-        binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(movies, this) { openMovieDetails(it) }
+        binding.rvMoviesForYou.adapter = CustomRecyclerAdapter(
+            R.layout.item_movie_cover_small,
+            movies,
+            this
+        ) { openMovieDetails(it) }
     }
 
-    private fun setupLastWatched(movies: List<MovieModel>) {
+    private fun setupLastWatched(
+        movies: List<MovieModel>,
+        episodes: List<HistoryModel>
+    ) {
         if (movies.isNotEmpty() && movies.last().poster.isNotBlank()) {
             binding.cvLastWatched.isGone = false
             Glide.with(this).load(movies.last().poster).into(binding.ivLastWatchedPoster)
             binding.tvLastWatched.text = movies.last().name
-        }
-        else {
+
+            val lastEpisode = episodes.first()
+            val movieModel = movies.find { it.movieId == lastEpisode.movieId }
+
+            binding.cvLastWatched.setOnClickListener {
+                if (movieModel != null) {
+                    openEpisode(movieModel, lastEpisode.episodeId)
+                }
+            }
+        } else {
             binding.cvLastWatched.isGone = true
             binding.tvMoviesViewed.isGone = true
         }
@@ -164,6 +186,11 @@ class MainFragment : Fragment() {
 
     private fun openMovieDetails(movie: MovieModel) {
         val action = MainFragmentDirections.actionMainFragmentToMovieActivity(movie)
+        findNavController().navigate(action)
+    }
+
+    private fun openEpisode(movie: MovieModel, episodeId: String) {
+        val action = MainFragmentDirections.actionMainFragmentToMovieActivity(movie, episodeId)
         findNavController().navigate(action)
     }
 

@@ -38,6 +38,11 @@ class CollectionDetailsFragment : Fragment() {
 
     private var collectionInfo: CollectionModel? = null
 
+    override fun onStart() {
+        setupName()
+        super.onStart()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,31 +52,39 @@ class CollectionDetailsFragment : Fragment() {
         binding = FragmentCollectionDetailsBinding.bind(view)
 
         val activity: CollectionEditActivity? = activity as CollectionEditActivity?
-        collectionInfo = activity?.getCollectionModel()
+        collectionInfo = activity?.getCurrCollection()
         setOnClickListeners()
 
-        val stateObserver = Observer<CollectionDetailsViewModel.CollectionDetailsState> { newState ->
-            when(newState) {
-                CollectionDetailsViewModel.CollectionDetailsState.Initial -> {
-                    binding.tvCollectionName.text = collectionInfo?.name ?: ""
-                    viewModel.getCollectionMovies(collectionInfo?.id ?: "")
-                }
-                CollectionDetailsViewModel.CollectionDetailsState.Loading -> {
-                    showLoading()
-                }
-                is CollectionDetailsViewModel.CollectionDetailsState.Failure -> {
-                    hideLoading()
-                    showErrorDialog(newState.errorMessage)
-                }
-                is CollectionDetailsViewModel.CollectionDetailsState.Success -> {
-                    hideLoading()
-                    setupRecyclerView(newState.movies)
+        val stateObserver =
+            Observer<CollectionDetailsViewModel.CollectionDetailsState> { newState ->
+                when (newState) {
+                    CollectionDetailsViewModel.CollectionDetailsState.Initial -> {
+                        binding.tvCollectionName.text = collectionInfo?.name ?: ""
+                        viewModel.getCollectionMovies(collectionInfo?.id ?: "")
+                    }
+                    CollectionDetailsViewModel.CollectionDetailsState.Loading -> {
+                        showLoading()
+                    }
+                    is CollectionDetailsViewModel.CollectionDetailsState.Failure -> {
+                        hideLoading()
+                        showErrorDialog(newState.errorMessage)
+                    }
+                    is CollectionDetailsViewModel.CollectionDetailsState.Success -> {
+                        hideLoading()
+                        setupRecyclerView(newState.movies)
+                    }
                 }
             }
-        }
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
+    }
+
+    private fun setupName() {
+        val activity: CollectionEditActivity? = activity as CollectionEditActivity?
+        val collectionInfo = activity?.getCurrCollection()
+
+        binding.tvCollectionName.text = collectionInfo?.name
     }
 
     private fun showLoading() {
@@ -111,10 +124,9 @@ class CollectionDetailsFragment : Fragment() {
     }
 
     private fun setOnEditButtonClickListener() {
-        if(viewModel.isCollectionFavourites(collectionInfo?.id ?: "")) {
+        if (viewModel.isCollectionFavourites(collectionInfo?.id ?: "")) {
             binding.btEdit.isGone = true
-        }
-        else {
+        } else {
             binding.btEdit.isGone = false
             binding.btEdit.setOnClickListener {
                 navigateToEditCollectionScreen()

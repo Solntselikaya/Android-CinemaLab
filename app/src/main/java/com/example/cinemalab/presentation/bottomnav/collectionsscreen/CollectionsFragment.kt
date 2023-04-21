@@ -37,7 +37,7 @@ class CollectionsFragment : Fragment() {
         setOnClickListeners()
 
         val stateObserver = Observer<CollectionsViewModel.CollectionsState> { newState ->
-            when(newState) {
+            when (newState) {
                 CollectionsViewModel.CollectionsState.Initial -> {
                     hideLoading()
                 }
@@ -91,7 +91,8 @@ class CollectionsFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         binding.rvCollections.layoutManager = layoutManager
-        binding.rvCollections.adapter = CollectionsRecyclerAdapter(collections) { navigateToCollectionDetails(it) }
+        binding.rvCollections.adapter =
+            CollectionsRecyclerAdapter(collections) { navigateToCollectionDetails(it) }
     }
 
     private fun navigateToCreateCollectionScreen() {
@@ -99,7 +100,10 @@ class CollectionsFragment : Fragment() {
     }
 
     private fun navigateToCollectionDetails(collectionInfo: CollectionModel) {
-        val action = CollectionsFragmentDirections.actionCollectionsFragmentToCollectionActionsActivity(collectionInfo)
+        val action =
+            CollectionsFragmentDirections.actionCollectionsFragmentToCollectionEditActivity(
+                collectionInfo
+            )
         findNavController().navigate(action)
     }
 

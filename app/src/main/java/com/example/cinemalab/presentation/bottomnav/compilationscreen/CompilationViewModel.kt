@@ -10,7 +10,7 @@ import com.example.cinemalab.data.remote.dto.toMovieModel
 import com.example.cinemalab.domain.model.Filters
 import com.example.cinemalab.domain.model.MovieModel
 import com.example.cinemalab.domain.usecase.collection.api.AddMovieToCollectionUseCase
-import com.example.cinemalab.domain.usecase.collection.api.GetFavouritesCollectionIdUseCase
+import com.example.cinemalab.domain.usecase.collection.storage.GetFavouritesCollectionIdUseCase
 import com.example.cinemalab.domain.usecase.movie.DislikeMovieInCompilationUseCase
 import com.example.cinemalab.domain.usecase.movie.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,10 +28,10 @@ class CompilationViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class CompilationState {
-        object Initial: CompilationState()
-        object Loading: CompilationState()
-        class Failure(val errorMessage: String): CompilationState()
-        class Success(val compilation: List<MovieModel>): CompilationState()
+        object Initial : CompilationState()
+        object Loading : CompilationState()
+        class Failure(val errorMessage: String) : CompilationState()
+        class Success(val compilation: List<MovieModel>) : CompilationState()
 
     }
 
@@ -59,7 +59,7 @@ class CompilationViewModel @Inject constructor(
                 _state.value = CompilationState.Success(
                     compilation.map { it.toMovieModel() }
                 )
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = CompilationState.Failure(ex.message.toString())
             }
         }
@@ -69,7 +69,7 @@ class CompilationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 dislikeMovieUseCase(_currMovieId.value.toString())
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = CompilationState.Failure(ex.message.toString())
             }
         }
@@ -81,7 +81,7 @@ class CompilationViewModel @Inject constructor(
                 val favId = getFavouritesCollectionIdUseCase()
                 addMovieToCollectionUseCase(favId, MovieIdDto(_currMovieId.value.toString()))
 
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = CompilationState.Failure(ex.message.toString())
             }
         }

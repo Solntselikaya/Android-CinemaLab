@@ -4,8 +4,10 @@ import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,11 +21,13 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentEpisodeBinding
+import com.example.cinemalab.domain.model.CollectionModel
 import com.example.cinemalab.domain.model.ShortChatInfoModel
 import com.example.cinemalab.domain.model.toShortChatInfoModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@UnstableApi @AndroidEntryPoint
+@UnstableApi
+@AndroidEntryPoint
 class EpisodeFragment : Fragment() {
 
     private lateinit var binding: FragmentEpisodeBinding
@@ -45,10 +49,15 @@ class EpisodeFragment : Fragment() {
         viewModel.setInitialState()
 
         val stateObserver = Observer<EpisodeViewModel.EpisodeState> { newState ->
-            when(newState){
+            when (newState) {
                 EpisodeViewModel.EpisodeState.Initial -> {
                     hideLoading()
-                    viewModel.getEpisodePosition(args.episodeInfo.episodeId)
+                    viewModel.initEpisodeScreen(
+                        args.movieInfo.id,
+                        args.episodeInfo.episodeId
+                    )
+                    //viewModel.checkIfMovieIsInFavourites(args.movieInfo.id)
+                    //viewModel.getEpisodePosition(args.episodeInfo.episodeId)
                 }
                 EpisodeViewModel.EpisodeState.Loading -> {
                     showLoading()
@@ -61,6 +70,7 @@ class EpisodeFragment : Fragment() {
                     setupEpisodeInfo()
                     setupMovieInfo()
                     setupVideoView(newState.position)
+                    setupPopupMenu(newState.collections)
 
                     hideLoading()
                 }
@@ -77,7 +87,10 @@ class EpisodeFragment : Fragment() {
     override fun onPause() {
         //binding.grPreview.isGone = false
         exoPlayer.pause()
-        viewModel.postEpisodePosition(args.episodeInfo.episodeId, (exoPlayer.currentPosition/1000).toInt())
+        viewModel.postEpisodePosition(
+            args.episodeInfo.episodeId,
+            (exoPlayer.currentPosition / 1000).toInt()
+        )
 
         super.onPause()
     }
@@ -112,6 +125,12 @@ class EpisodeFragment : Fragment() {
         binding.tvEpisodeName.text = args.episodeInfo.name
         binding.tvEpisodeDescription.text = args.episodeInfo.description
 
+        if (viewModel.isInFavourites.value == true) {
+            binding.btLike.setImageResource(R.drawable.icon_heart_filled)
+        } else {
+            binding.btLike.setImageResource(R.drawable.icon_heart)
+        }
+
         //val textureView = binding.episodeVideoView.videoSurfaceView as TextureView
         Glide.with(this).load(args.episodeInfo.preview).into(binding.ivPreview)
     }
@@ -131,7 +150,27 @@ class EpisodeFragment : Fragment() {
         val mediaItem = MediaItem.fromUri(Uri.parse(args.episodeInfo.filePath))
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
-        exoPlayer.seekTo((position*1000).toLong())
+        exoPlayer.seekTo((position * 1000).toLong())
+    }
+
+    private fun setupPopupMenu(collections: List<CollectionModel>) {
+        val menu = PopupMenu(context, binding.btPlus)
+
+        for ((i, collection) in collections.withIndex()) {
+            if (i == 0) continue
+            menu.menu.add(Menu.NONE, i, Menu.NONE, collection.name)
+        }
+
+        menu.setOnMenuItemClickListener { it ->
+            viewModel.onMenuItemClickListener(
+                collections[it.itemId].id,
+                args.movieInfo.id
+            )
+        }
+
+        binding.btPlus.setOnClickListener {
+            menu.show()
+        }
     }
 
     private fun setOnClickListeners() {
@@ -140,6 +179,7 @@ class EpisodeFragment : Fragment() {
         setOnChatButtonClickListener()
         setOnPlusButtonClickListener()
         setOnHeartClickListener()
+        //setOnFilledHeartClickListener()
     }
 
     private fun setOnBackButtonClickListener() {
@@ -177,13 +217,31 @@ class EpisodeFragment : Fragment() {
     private fun setOnHeartClickListener() {
         binding.btLike.setOnClickListener {
 
+            if (viewModel.isInFavourites.value == true) {
+                binding.btLike.setImageResource(R.drawable.icon_heart)
+                viewModel.deleteMovieFromFavourites(args.movieInfo.id)
+            } else {
+                binding.btLike.setImageResource(R.drawable.icon_heart_filled)
+                viewModel.addMovieToFavourites(args.movieInfo.id)
+            }
         }
     }
 
+    /*private fun setOnFilledHeartClickListener() {
+        binding.btLikeFilled.setOnClickListener {
+            binding.btLike.isGone = false
+            binding.btLikeFilled.isGone = true
+
+            viewModel.deleteMovieFromFavourites(args.movieInfo.id)
+        }
+    }*/
+
     private fun navigateToChatsActivity() {
         val emptyInfo = ShortChatInfoModel("Undefined", "Undefined")
-        val action = EpisodeFragmentDirections.actionEpisodeFragmentToMessengerFragment2(args.movieInfo.chatInfo?.toShortChatInfoModel()
-            ?: emptyInfo)
+        val action = EpisodeFragmentDirections.actionEpisodeFragmentToMessengerFragment2(
+            args.movieInfo.chatInfo?.toShortChatInfoModel()
+                ?: emptyInfo
+        )
         findNavController().navigate(action)
     }
 

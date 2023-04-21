@@ -9,7 +9,7 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.cinemalab.presentation.movie.moviedetailsscreen.MovieDetailsFragment"
         android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_movie_details" >
+        tools:layout="@layout/fragment_movie_details">
         <action
             android:id="@+id/action_movieDetailsFragment_to_episodeFragment"
             app:destination="@id/episodeFragment" />
@@ -22,7 +22,7 @@
         android:id="@+id/episodeFragment"
         android:name="com.example.cinemalab.presentation.movie.episodescreen.EpisodeFragment"
         android:label="fragment_episode"
-        tools:layout="@layout/fragment_episode" >
+        tools:layout="@layout/fragment_episode">
         <argument
             android:name="movieInfo"
             app:argType="com.example.cinemalab.domain.model.MovieShortModel" />
@@ -36,9 +36,9 @@
     </fragment>
     <fragment
         android:id="@+id/messengerFragment2"
-        android:name="com.example.cinemalab.presentation.chats.messenger.MessengerFragment"
+        android:name="com.example.cinemalab.presentation.chats.chat.ChatFragment"
         android:label="fragment_messenger"
-        tools:layout="@layout/fragment_messenger" >
+        tools:layout="@layout/fragment_chat">
         <argument
             android:name="chatInfo"
             app:argType="com.example.cinemalab.domain.model.ShortChatInfoModel" />

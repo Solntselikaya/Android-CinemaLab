@@ -1,6 +1,6 @@
 package com.example.cinemalab.data.repository
 
-import com.example.cinemalab.data.remote.CollectionApi
+import com.example.cinemalab.data.remote.api.CollectionApi
 import com.example.cinemalab.data.remote.dto.CollectionDto
 import com.example.cinemalab.data.remote.dto.CollectionNameDto
 import com.example.cinemalab.data.remote.dto.MovieDto
@@ -41,7 +41,7 @@ class CollectionRepositoryImpl @Inject constructor(
         token: String,
         collectionId: String,
         movieId: String
-    ) {
+    ): Response<Void> {
         return api.deleteMovieFromCollection(token, collectionId, movieId)
     }
 

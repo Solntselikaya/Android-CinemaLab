@@ -1,209 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:isScrollContainer="true"
     tools:context=".presentation.bottomnav.mainscreen.MainFragment">
 
-    <ImageView
-        android:id="@+id/ivPromotedPoster"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/cd_promoted_movie_poster"
-        android:scaleType="fitCenter"
-        android:foreground="@drawable/gradient_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btGoWatchPromoted"
-        style="@style/button_orange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:paddingHorizontal="32dp"
-        android:text="@string/watch_button_text"
-        app:layout_constraintBottom_toBottomOf="@+id/ivPromotedPoster"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvMoviesTrend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="В тренде"
-        android:textAppearance="@style/Theme.CinemaLab.h5"
-        android:textColor="@color/orange"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPromotedPoster" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTrends"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        android:clipToPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMoviesTrend" />
-
-    <TextView
-        android:id="@+id/tvMoviesViewed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Вы смотрели"
-        android:textAppearance="@style/Theme.CinemaLab.h5"
-        android:textColor="@color/orange"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvTrends" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvLastWatched"
-        android:layout_width="0dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMoviesViewed">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivLastWatchedPoster"
-            android:layout_width="match_parent"
+            android:id="@+id/ivPromotedPoster"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
+            android:contentDescription="@string/cd_promoted_movie_poster"
             android:foreground="@drawable/gradient_foreground"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <Button
+            android:id="@+id/btGoWatchPromoted"
+            style="@style/button_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:src="@drawable/icon_play_video"
-            app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
-            app:layout_constraintEnd_toEndOf="@+id/ivLastWatchedPoster"
-            app:layout_constraintStart_toStartOf="@+id/ivLastWatchedPoster"
-            app:layout_constraintTop_toTopOf="@+id/ivLastWatchedPoster" />
-
-        <TextView
-            android:id="@+id/tvLastWatched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#00FFFFFF"
-            android:text="test"
-            android:textAppearance="@style/Theme.CinemaLab.button"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
+            android:layout_marginBottom="64dp"
+            android:paddingHorizontal="32dp"
+            android:text="@string/watch_button_text"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPromotedPoster"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvMoviesTrend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/in_trend"
+            android:textAppearance="@style/Theme.CinemaLab.h5"
+            android:textColor="@color/orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivPromotedPoster" />
 
-    <TextView
-        android:id="@+id/tvMoviesNew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Новое"
-        android:textAppearance="@style/Theme.CinemaLab.h5"
-        android:textColor="@color/orange"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvLastWatched" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTrends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoviesTrend" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNewMovies"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMoviesNew" />
+        <TextView
+            android:id="@+id/tvMoviesViewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/you_watched"
+            android:textAppearance="@style/Theme.CinemaLab.h5"
+            android:textColor="@color/orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvTrends" />
 
-    <TextView
-        android:id="@+id/tvMoviesForYou"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Для вас"
-        android:textAppearance="@style/Theme.CinemaLab.h5"
-        android:textColor="@color/orange"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvNewMovies" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvLastWatched"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/transparent"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoviesViewed">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMoviesForYou"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:clipToPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMoviesForYou" />
+            <ImageView
+                android:id="@+id/ivLastWatchedPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/main_black"
+                android:foreground="@drawable/gradient_foreground"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:src="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/btSetInterests"
-        style="@style/button_orange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="44dp"
-        android:text="Указать интересы"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvMoviesForYou" />
+            <ImageView
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:src="@drawable/icon_play_video"
+                app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
+                app:layout_constraintEnd_toEndOf="@+id/ivLastWatchedPoster"
+                app:layout_constraintStart_toStartOf="@+id/ivLastWatchedPoster"
+                app:layout_constraintTop_toTopOf="@+id/ivLastWatchedPoster" />
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/loading"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvLastWatched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#00FFFFFF"
+                android:textAppearance="@style/Theme.CinemaLab.button"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/ivLastWatchedPoster"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/grMainContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btGoWatchPromoted,ivPromotedPoster,tvMoviesTrend,tvMoviesNew,rvMoviesForYou,btSetInterests,rvTrends,tvMoviesForYou,rvNewMovies,tvMoviesViewed,cvLastWatched"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvMoviesNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/new_movies"
+            android:textAppearance="@style/Theme.CinemaLab.h5"
+            android:textColor="@color/orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvLastWatched" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNewMovies"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoviesNew" />
+
+        <TextView
+            android:id="@+id/tvMoviesForYou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/for_you"
+            android:textAppearance="@style/Theme.CinemaLab.h5"
+            android:textColor="@color/orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvNewMovies" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMoviesForYou"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoviesForYou" />
+
+        <Button
+            android:id="@+id/btSetInterests"
+            style="@style/button_orange"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="44dp"
+            android:text="@string/select_interests"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvMoviesForYou" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/grMainContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btGoWatchPromoted,ivPromotedPoster,tvMoviesTrend,tvMoviesNew,rvMoviesForYou,btSetInterests,rvTrends,tvMoviesForYou,rvNewMovies,tvMoviesViewed,cvLastWatched"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

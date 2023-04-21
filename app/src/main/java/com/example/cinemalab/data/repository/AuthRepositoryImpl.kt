@@ -1,6 +1,6 @@
 package com.example.cinemalab.data.repository
 
-import com.example.cinemalab.data.remote.AuthApi
+import com.example.cinemalab.data.remote.api.AuthApi
 import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
 import com.example.cinemalab.data.remote.dto.LoginDto
 import com.example.cinemalab.data.remote.dto.RefreshTokenDto

@@ -13,4 +13,4 @@ data class EpisodeModel(
     val preview: String,
     val year: String,
     val runtime: Int
-): Parcelable
+) : Parcelable

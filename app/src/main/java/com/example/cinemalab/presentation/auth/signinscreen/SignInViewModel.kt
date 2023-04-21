@@ -8,16 +8,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinemalab.R
 import com.example.cinemalab.common.Constants
-import com.example.cinemalab.data.remote.dto.*
-import com.example.cinemalab.domain.model.CollectionModel
+import com.example.cinemalab.data.remote.dto.AuthTokenPairDto
+import com.example.cinemalab.data.remote.dto.CollectionDto
+import com.example.cinemalab.data.remote.dto.LoginDto
+import com.example.cinemalab.data.remote.dto.toCollectionEntity
 import com.example.cinemalab.domain.usecase.auth.LoginUseCase
 import com.example.cinemalab.domain.usecase.collection.api.GetCollectionsUseCase
-import com.example.cinemalab.domain.usecase.collection.api.GetFavouritesCollectionIdUseCase
 import com.example.cinemalab.domain.usecase.collection.db.AddCollectionToDatabaseUseCase
+import com.example.cinemalab.domain.usecase.collection.storage.GetFavouritesCollectionIdUseCase
+import com.example.cinemalab.domain.usecase.collection.storage.SaveFavouritesCollectionIdInStorageUseCase
+import com.example.cinemalab.domain.usecase.storage.SaveUserEmailInStorageUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,14 +30,16 @@ class SignInViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val getCollectionsUseCase: GetCollectionsUseCase,
     private val getFavouritesCollectionIdUseCase: GetFavouritesCollectionIdUseCase,
+    private val saveFavouritesCollectionIdInStorageUseCase: SaveFavouritesCollectionIdInStorageUseCase,
+    private val saveUserEmailInStorageUseCase: SaveUserEmailInStorageUseCase,
     private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase
-): ViewModel() {
+) : ViewModel() {
 
     sealed class SignInState {
-        object Initial: SignInState()
-        object Loading: SignInState()
-        class Failure(val errorMessage: String): SignInState()
-        class Success(val tokenResponse: AuthTokenPairDto): SignInState()
+        object Initial : SignInState()
+        object Loading : SignInState()
+        class Failure(val errorMessage: String) : SignInState()
+        class Success(val tokenResponse: AuthTokenPairDto) : SignInState()
     }
 
     private val _state = MutableLiveData<SignInState>(SignInState.Initial)
@@ -83,12 +88,14 @@ class SignInViewModel @Inject constructor(
                 val saveTokenUseCase = SaveTokenUseCase(context)
                 saveTokenUseCase.execute(token)
 
+                saveUserEmailInStorageUseCase(email)
+
                 val collections = getCollectionsUseCase()
                 saveFavId(collections)
-                rearrangeAndSaveToDbCollections(collections)
+                rearrangeAndSaveToDbCollections(collections, email)
 
                 _state.value = SignInState.Success(token)
-            } catch(ex: Exception) {
+            } catch (ex: Exception) {
                 _state.value = SignInState.Failure(
                     when (ex.message) {
                         context.getString(R.string.exception_http_401) -> context.getString(R.string.invalid_email_or_password)
@@ -102,26 +109,32 @@ class SignInViewModel @Inject constructor(
     private fun saveFavId(collections: List<CollectionDto>) {
         val favString = context.getString(Constants.RESERVED_NAME_FAVOURITES)
         val favCollection = collections.find { it.name == favString }
-        val sharedPrefs = context.getSharedPreferences(Constants.PREF_NAME_FAVOURITES_ID, Context.MODE_PRIVATE)
-        sharedPrefs.edit().putString(Constants.FAVOURITES_KEY, favCollection?.collectionId).apply()
+        saveFavouritesCollectionIdInStorageUseCase(favCollection?.collectionId ?: "")
     }
 
-    private suspend fun rearrangeAndSaveToDbCollections(collections: List<CollectionDto>) {
+    private suspend fun rearrangeAndSaveToDbCollections(
+        collections: List<CollectionDto>,
+        email: String
+    ) {
         val favId = getFavouritesCollectionIdUseCase()
 
         val rearrangedCollections = mutableListOf<CollectionDto>()
         val favCollection = collections.find { it.collectionId == favId }
         if (favCollection != null) {
             rearrangedCollections.add(favCollection)
-            addCollectionToDatabaseUseCase(favCollection.toCollectionEntity())
+            addCollectionToDatabaseUseCase(favCollection.toCollectionEntity(email))
         }
-        for(i in collections.indices){
+        for (i in collections.indices) {
             if (collections[i].collectionId == favId)
                 continue
-            else{
+            else {
                 rearrangedCollections.add(collections[i])
-                addCollectionToDatabaseUseCase(collections[i].toCollectionEntity())
+                addCollectionToDatabaseUseCase(collections[i].toCollectionEntity(email))
             }
         }
+    }
+
+    fun start() {
+        _state.value = SignInState.Initial
     }
 }

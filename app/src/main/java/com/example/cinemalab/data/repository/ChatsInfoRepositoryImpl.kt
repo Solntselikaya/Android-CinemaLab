@@ -1,6 +1,6 @@
 package com.example.cinemalab.data.repository
 
-import com.example.cinemalab.data.remote.ChatsInfoApi
+import com.example.cinemalab.data.remote.api.ChatsInfoApi
 import com.example.cinemalab.data.remote.dto.ChatDto
 import com.example.cinemalab.data.remote.dto.ChatInfoDto
 import com.example.cinemalab.domain.repository.ChatsInfoRepository

@@ -8,7 +8,7 @@ data class ChatModel(
     val chatId: String,
     val chatName: String,
     val lastMessage: MessageModel? = null
-): Parcelable
+) : Parcelable
 
 fun ChatModel.toShortChatInfoModel(): ShortChatInfoModel {
     return ShortChatInfoModel(

@@ -29,6 +29,6 @@ interface CollectionRepository {
         token: String,
         collectionId: String,
         movieId: String
-    )
+    ): Response<Void>
 
 }

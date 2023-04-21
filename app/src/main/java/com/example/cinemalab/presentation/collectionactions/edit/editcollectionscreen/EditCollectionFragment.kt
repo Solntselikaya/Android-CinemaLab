@@ -3,10 +3,10 @@ package com.example.cinemalab.presentation.collectionactions.edit.editcollection
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -20,19 +20,29 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditCollectionFragment : Fragment() {
 
     private var callback: CollectionEditListener? = null
+    private var collectionInfo: CollectionModel? = null
+
     interface CollectionEditListener {
+
+        fun onCollectionNameEdit(newName: String)
         fun onCollectionDelete()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = activity as CollectionEditListener
+
+        val activity: CollectionEditActivity? = activity as CollectionEditActivity?
+        collectionInfo = activity?.getCurrCollection()
     }
 
     private lateinit var binding: FragmentEditCollectionBinding
     private val viewModel: EditCollectionViewModel by viewModels()
 
-    private var collectionInfo: CollectionModel? = null
+    override fun onStart() {
+        setupIcon()
+        super.onStart()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +51,10 @@ class EditCollectionFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_edit_collection, container, false)
         binding = FragmentEditCollectionBinding.bind(view)
 
-        val activity: CollectionEditActivity? = activity as CollectionEditActivity?
-        collectionInfo = activity?.getCollectionModel()
         setOnClickListeners()
 
         val stateObserver = Observer<EditCollectionViewModel.EditCollectionState> { newState ->
-            when(newState) {
+            when (newState) {
                 EditCollectionViewModel.EditCollectionState.Initial -> {
                     binding.etCollectionName.setText(collectionInfo?.name)
                 }
@@ -57,7 +65,10 @@ class EditCollectionFragment : Fragment() {
                     hideLoading()
                     showErrorDialog(newState.errorMessage)
                 }
-                is EditCollectionViewModel.EditCollectionState.Success -> {
+                EditCollectionViewModel.EditCollectionState.Success -> {
+                    navigateToCollectionDetails()
+                }
+                EditCollectionViewModel.EditCollectionState.Quit -> {
                     callback?.onCollectionDelete()
                 }
             }
@@ -65,6 +76,13 @@ class EditCollectionFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
+    }
+
+    private fun setupIcon() {
+        val activity: CollectionEditActivity? = activity as CollectionEditActivity?
+        val collectionInfo = activity?.getCurrCollection()
+
+        binding.ivIcon.setImageResource(collectionInfo?.icon ?: R.drawable.collection_icon_01)
     }
 
     private fun showLoading() {
@@ -100,14 +118,17 @@ class EditCollectionFragment : Fragment() {
 
     private fun setOnSelectIconClickListener() {
         binding.btChooseIcon.setOnClickListener {
+            saveEditedName()
             navigateToIconSelectScreen()
         }
     }
 
     private fun setOnSaveButtonClickListener() {
         binding.btSave.setOnClickListener {
-            navigateToCollectionDetails()
-            //need to add save
+            saveEditedName()
+            val activity: CollectionEditActivity? = activity as CollectionEditActivity?
+            collectionInfo = activity?.getCurrCollection()
+            viewModel.saveEditedCollection(collectionInfo)
         }
     }
 
@@ -115,6 +136,12 @@ class EditCollectionFragment : Fragment() {
         binding.btDelete.setOnClickListener {
             viewModel.deleteCollection(collectionInfo?.id ?: "")
         }
+    }
+
+    private fun saveEditedName() {
+        callback?.onCollectionNameEdit(
+            binding.etCollectionName.text.toString()
+        )
     }
 
     private fun navigateToCollectionDetails() {

@@ -2,19 +2,16 @@ package com.example.cinemalab.presentation.chats
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.navArgs
 import com.example.cinemalab.R
-import com.example.cinemalab.domain.model.ChatModel
+import com.example.cinemalab.presentation.chats.chat.ChatFragment
 import com.example.cinemalab.presentation.chats.list.ChatsListFragment
-import com.example.cinemalab.presentation.chats.messenger.MessengerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChatsActivity :
     AppCompatActivity(),
     ChatsListFragment.ChatsListListener,
-    MessengerFragment.MessengerListener
-{
+    ChatFragment.MessengerListener {
 
     //private val args: ChatsActivityArgs by navArgs()
 

@@ -5,9 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MessageModel(
-    val authorAvatar: String,
+    val authorAvatar: String? = null,
     val authorId: String,
     val authorName: String,
-    val creationDateTime: String,
+    val creationDate: String,
+    val creationTime: String,
     val text: String
-): Parcelable
+) : Parcelable

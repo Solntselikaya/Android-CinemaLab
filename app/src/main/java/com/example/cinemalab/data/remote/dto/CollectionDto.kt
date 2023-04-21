@@ -16,10 +16,14 @@ fun CollectionDto.toCollectionModel(): CollectionModel {
     )
 }
 
-fun CollectionDto.toCollectionEntity(icon: Int? = R.drawable.collection_icon_01): CollectionEntity {
+fun CollectionDto.toCollectionEntity(
+    userId: String,
+    icon: Int? = R.drawable.collection_icon_01
+): CollectionEntity {
     return CollectionEntity(
-        id = collectionId,
+        collectionId = collectionId,
         name = name,
-        icon = icon
+        icon = icon,
+        userId = userId
     )
 }

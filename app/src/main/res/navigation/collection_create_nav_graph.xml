@@ -9,7 +9,7 @@
         android:id="@+id/createCollectionFragment"
         android:name="com.example.cinemalab.presentation.collectionactions.create.createcollectionscreen.CreateCollectionFragment"
         android:label="fragment_create_collection"
-        tools:layout="@layout/fragment_create_collection" >
+        tools:layout="@layout/fragment_create_collection">
         <action
             android:id="@+id/action_createCollectionFragment_to_iconSelectFragment2"
             app:destination="@id/iconSelectFragment"

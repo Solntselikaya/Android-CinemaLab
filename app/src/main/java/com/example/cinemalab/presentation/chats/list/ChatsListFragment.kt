@@ -3,7 +3,6 @@ package com.example.cinemalab.presentation.chats.list
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentChatsListBinding
 import com.example.cinemalab.domain.model.ChatModel
-import com.example.cinemalab.presentation.chats.ChatsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +46,7 @@ class ChatsListFragment : Fragment() {
         setOnClickListeners()
 
         val stateObserver = Observer<ChatsListViewModel.ChatsListState> { newState ->
-            when(newState){
+            when (newState) {
                 ChatsListViewModel.ChatsListState.Initial -> {
                     viewModel.getChats()
                 }
@@ -93,7 +91,7 @@ class ChatsListFragment : Fragment() {
     }
 
     private fun setOnBackButtonClickListener() {
-        binding.btBack.setOnClickListener{
+        binding.btBack.setOnClickListener {
             callback?.onChatsListExit()
         }
     }

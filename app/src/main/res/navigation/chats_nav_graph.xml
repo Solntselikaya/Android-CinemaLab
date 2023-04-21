@@ -8,16 +8,16 @@
         android:id="@+id/chatsListFragment"
         android:name="com.example.cinemalab.presentation.chats.list.ChatsListFragment"
         android:label="fragment_chats_list"
-        tools:layout="@layout/fragment_chats_list" >
+        tools:layout="@layout/fragment_chats_list">
         <action
             android:id="@+id/action_chatsListFragment_to_messengerFragment"
-            app:destination="@id/messengerFragment" />
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
-        android:id="@+id/messengerFragment"
-        android:name="com.example.cinemalab.presentation.chats.messenger.MessengerFragment"
+        android:id="@+id/chatFragment"
+        android:name="com.example.cinemalab.presentation.chats.chat.ChatFragment"
         android:label="fragment_messenger"
-        tools:layout="@layout/fragment_messenger" >
+        tools:layout="@layout/fragment_chat">
         <argument
             android:name="chatInfo"
             app:argType="com.example.cinemalab.domain.model.ShortChatInfoModel" />

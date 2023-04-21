@@ -10,17 +10,19 @@ import com.example.cinemalab.domain.model.CollectionModel
 @Entity(tableName = DATABASE_NAME)
 data class CollectionEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id")
-    val id: String,
+    @ColumnInfo(name = "collection_id")
+    val collectionId: String,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "icon")
-    val icon: Int? = R.drawable.collection_icon_01
+    val icon: Int? = R.drawable.collection_icon_01,
+    @ColumnInfo(name = "user_id")
+    val userId: String? = null
 )
 
 fun CollectionEntity.toCollectionModel(): CollectionModel {
     return CollectionModel(
-        id = id,
+        id = collectionId,
         name = name,
         icon = icon
     )

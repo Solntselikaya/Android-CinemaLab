@@ -1,7 +1,7 @@
 package com.example.cinemalab.presentation.collectionactions.create
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemalab.R
 import com.example.cinemalab.domain.model.CollectionModel
 import com.example.cinemalab.presentation.collectionactions.create.createcollectionscreen.CreateCollectionFragment
@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionCreateActivity :
     AppCompatActivity(),
     CreateCollectionFragment.CollectionCreateListener,
-    IconSelectFragment.IconSelectListener
-{
+    IconSelectFragment.IconSelectListener {
 
     private var collection = CollectionModel("", "", R.drawable.collection_icon_01)
 

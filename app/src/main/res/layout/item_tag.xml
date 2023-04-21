@@ -3,10 +3,10 @@
     android:id="@+id/tvTagName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textAppearance="@style/Theme.CinemaLab.body2"
-    android:textColor="@color/white"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/background_text"
     android:paddingHorizontal="16dp"
     android:paddingVertical="1dp"
-    android:background="@drawable/background_text"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"/>
+    android:textAppearance="@style/Theme.CinemaLab.body2"
+    android:textColor="@color/white" />

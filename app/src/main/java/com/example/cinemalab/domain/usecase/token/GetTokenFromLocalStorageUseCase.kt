@@ -6,7 +6,7 @@ import com.example.cinemalab.data.repository.TokenRepository
 
 class GetTokenFromLocalStorageUseCase(
     private val context: Context
-    ) {
+) {
 
     private val tokenRepositoryImpl by lazy {
         TokenRepository(context)

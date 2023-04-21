@@ -1,6 +1,5 @@
 package com.example.cinemalab.presentation.chats.list
 
-import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -42,7 +41,7 @@ class ChatsRecyclerAdapter(
         val message = chats[position].lastMessage?.text
         val spannable: Spannable = SpannableString(userName + message)
         spannable.setSpan(
-            ForegroundColorSpan(holder.item.context.getColor(R.color.dark_gray)),
+            ForegroundColorSpan(holder.item.context.getColor(R.color.gray)),
             0,
             userName.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -56,11 +55,10 @@ class ChatsRecyclerAdapter(
 
     private fun getChatShortName(chatName: String): String {
         val words = chatName.split(" ")
-        when(words.size) {
-            1 -> return words[0].substring(0, 1).uppercase()
-            2 -> return words[0].substring(0, 1).uppercase() + words[1].substring(0, 1).uppercase()
+        return when (words.size) {
+            1 -> words[0].substring(0, 1).uppercase()
+            else -> words[0].substring(0, 1).uppercase() + words[1].substring(0, 1).uppercase()
         }
-        return ""
     }
 
     private fun getUserName(holder: ChatsViewHolder, fullName: String): String {

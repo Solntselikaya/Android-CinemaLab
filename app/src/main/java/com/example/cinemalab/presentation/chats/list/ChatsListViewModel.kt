@@ -17,10 +17,10 @@ class ChatsListViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class ChatsListState {
-        object Initial: ChatsListState()
-        object Loading: ChatsListState()
-        class Failure(val errorMessage: String): ChatsListState()
-        class Success(val chats: List<ChatModel>): ChatsListState()
+        object Initial : ChatsListState()
+        object Loading : ChatsListState()
+        class Failure(val errorMessage: String) : ChatsListState()
+        class Success(val chats: List<ChatModel>) : ChatsListState()
     }
 
     private val _state = MutableLiveData<ChatsListState>(ChatsListState.Initial)
@@ -32,8 +32,8 @@ class ChatsListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val discussions = getChatsListUseCase()
-                _state.value = ChatsListState.Success(discussions.map{ it.toChatModel() })
-            } catch(ex: Exception) {
+                _state.value = ChatsListState.Success(discussions.map { it.toChatModel() })
+            } catch (ex: Exception) {
                 _state.value = ChatsListState.Failure(ex.message.toString())
             }
         }

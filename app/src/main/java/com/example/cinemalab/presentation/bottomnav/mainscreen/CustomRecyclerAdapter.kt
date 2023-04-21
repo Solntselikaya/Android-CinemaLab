@@ -11,6 +11,7 @@ import com.example.cinemalab.R
 import com.example.cinemalab.domain.model.MovieModel
 
 class CustomRecyclerAdapter(
+    private val itemLayout: Int,
     private val movies: List<MovieModel>,
     private val fragment: Fragment,
     private val onClick: (MovieModel) -> Unit
@@ -22,7 +23,7 @@ class CustomRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_movie_cover_small, parent, false)
+            .inflate(itemLayout, parent, false)
         return CustomViewHolder(itemView)
     }
 
@@ -30,7 +31,7 @@ class CustomRecyclerAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         Glide.with(fragment).load(movies[position].poster).into(holder.cover)
-        holder.cover.setOnClickListener{
+        holder.cover.setOnClickListener {
             onClick(movies[position])
         }
     }

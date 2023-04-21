@@ -14,13 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentCreateCollectionBinding
 import com.example.cinemalab.presentation.collectionactions.create.CollectionCreateActivity
-import com.example.cinemalab.presentation.movie.MovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateCollectionFragment : Fragment() {
 
     private var callback: CollectionCreateListener? = null
+
     interface CollectionCreateListener {
         fun onCollectionCreated()
         fun onCreateBackPressed()
@@ -49,7 +49,7 @@ class CreateCollectionFragment : Fragment() {
         setOnClickListeners()
 
         val stateObserver = Observer<CreateCollectionViewModel.CreateCollectionState> { newState ->
-            when(newState) {
+            when (newState) {
                 CreateCollectionViewModel.CreateCollectionState.Initial -> Unit
                 CreateCollectionViewModel.CreateCollectionState.Loading -> {
                     showLoading()

@@ -1,6 +1,6 @@
 package com.example.cinemalab.data.repository
 
-import com.example.cinemalab.data.remote.CoverApi
+import com.example.cinemalab.data.remote.api.CoverApi
 import com.example.cinemalab.data.remote.dto.PromotedCoverDto
 import com.example.cinemalab.domain.repository.CoverRepository
 import javax.inject.Inject

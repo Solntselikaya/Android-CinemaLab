@@ -12,10 +12,10 @@ class IconSelectViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class IconSelectState {
-        object Initial: IconSelectState()
-        object Loading: IconSelectState()
-        class Failure(val errorMessage: String): IconSelectState()
-        object Success: IconSelectState()
+        object Initial : IconSelectState()
+        object Loading : IconSelectState()
+        class Failure(val errorMessage: String) : IconSelectState()
+        object Success : IconSelectState()
     }
 
     private val _state = MutableLiveData<IconSelectState>(IconSelectState.Initial)

@@ -6,6 +6,9 @@ import com.example.cinemalab.common.Constants
 import com.example.cinemalab.common.Constants.DATABASE_NAME
 import com.example.cinemalab.data.db.CollectionRoomDatabase
 import com.example.cinemalab.data.remote.*
+import com.example.cinemalab.data.remote.api.*
+import com.example.cinemalab.data.remote.websocket.ChatsWebSocket
+import com.example.cinemalab.data.remote.websocket.ChatsWebSocketListener
 import com.example.cinemalab.data.repository.*
 import com.example.cinemalab.domain.repository.*
 import dagger.Module
@@ -165,5 +168,40 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDao(database: CollectionRoomDatabase) = database.collectionDao()
+
+    @Provides
+    @Singleton
+    fun provideHistoryApi(): HistoryApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
+            .build()
+            .create(HistoryApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHistoryRepository(api: HistoryApi): HistoryRepository {
+        return HistoryRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatsWebSocketListener(): ChatsWebSocketListener {
+        return ChatsWebSocketListener()
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatsWebSocket(chatsWebSocketListener: ChatsWebSocketListener): ChatsWebSocket {
+        return ChatsWebSocket(client.build(), chatsWebSocketListener)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatsRepository(chatsWebSocket: ChatsWebSocket): ChatsRepository {
+        return ChatsRepositoryImpl(chatsWebSocket)
+    }
 
 }
