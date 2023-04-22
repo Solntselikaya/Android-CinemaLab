@@ -90,8 +90,10 @@ class MovieDetailsFragment : Fragment() {
                         newState.episodes
                     )
 
-                    binding.btGoWatch.setOnClickListener {
-                        navigateToEpisodeScreen(newState.episodes.first())
+                    if (newState.episodes.size > 1) {
+                        binding.btGoWatch.setOnClickListener {
+                            navigateToEpisodeScreen(newState.episodes.first())
+                        }
                     }
                 }
                 is MovieDetailsViewModel.MovieDetailsState.Navigate -> {
@@ -132,7 +134,6 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setOnClickListeners() {
         setOnBackButtonClickListener()
-        //setOnWatchButtonClickListener()
         setOnChatsButtonClickListener()
     }
 
@@ -141,12 +142,6 @@ class MovieDetailsFragment : Fragment() {
             callback?.onMovieDetailsBackPressed()
         }
     }
-
-    /*private fun setOnWatchButtonClickListener() {
-        binding.btGoWatch.setOnClickListener {
-            navigateToEpisodeScreen()
-        }
-    }*/
 
     private fun setOnChatsButtonClickListener() {
         binding.btChats.setOnClickListener {
