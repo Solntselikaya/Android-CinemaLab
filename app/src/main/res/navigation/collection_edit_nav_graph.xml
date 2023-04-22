@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_actions_nav_graph"
+    app:startDestination="@id/collectionDetailsFragment">
+
+    <fragment
+        android:id="@+id/collectionDetailsFragment"
+        android:name="com.example.cinemalab.presentation.collectionactions.edit.collectiondetailsscreen.CollectionDetailsFragment"
+        android:label="fragment_collection_details"
+        tools:layout="@layout/fragment_collection_details">
+        <action
+            android:id="@+id/action_collectionDetailsFragment_to_editCollectionFragment"
+            app:destination="@id/editCollectionFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCollectionFragment"
+        android:name="com.example.cinemalab.presentation.collectionactions.edit.editcollectionscreen.EditCollectionFragment"
+        android:label="fragment_edit_collection"
+        tools:layout="@layout/fragment_edit_collection">
+        <action
+            android:id="@+id/action_editCollectionFragment_to_collectionDetailsFragment"
+            app:destination="@id/collectionDetailsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/collectionDetailsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_editCollectionFragment_to_iconSelectFragment"
+            app:destination="@id/iconSelectFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/iconSelectFragment"
+        android:name="com.example.cinemalab.presentation.collectionactions.iconselectionscreen.IconSelectFragment"
+        android:label="fragment_icon_select"
+        tools:layout="@layout/fragment_icon_select">
+        <action
+            android:id="@+id/action_iconSelectFragment_to_editCollectionFragment"
+            app:destination="@id/editCollectionFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+</navigation>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.movie.episodescreen.EpisodeFragment">
+
+    <FrameLayout
+        android:id="@+id/episodeFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/episodeVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            app:animation_enabled="false"
+            app:controller_layout_id="@layout/custom_media_player"
+            app:show_timeout="4000"
+            app:surface_type="texture_view">
+
+        </androidx.media3.ui.PlayerView>
+
+        <View
+            android:id="@+id/vPreviewBackground"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@color/black" />
+
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/ivStartPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_video_play" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tvEpisodeDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/Theme.CinemaLab.body2"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionHeader" />
+
+    <ImageButton
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:src="@drawable/icon_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescriptionHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/description"
+        android:textAppearance="@style/Theme.CinemaLab.h5"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivMoviePoster" />
+
+    <ImageView
+        android:id="@+id/ivMoviePoster"
+        android:layout_width="44dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEpisodeName"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvEpisodeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/Theme.CinemaLab.h5"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/episodeFrame" />
+
+    <TextView
+        android:id="@+id/tvMovieName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/Theme.CinemaLab.overline"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tvSeasons"
+        app:layout_constraintEnd_toStartOf="@+id/btChats"
+        app:layout_constraintStart_toEndOf="@+id/ivMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/ivMoviePoster"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvSeasons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/Theme.CinemaLab.caption"
+        android:textColor="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/tvYear"
+        app:layout_constraintStart_toEndOf="@+id/ivMoviePoster"
+        app:layout_constraintTop_toBottomOf="@+id/tvMovieName" />
+
+    <TextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/Theme.CinemaLab.caption"
+        android:textColor="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMoviePoster"
+        app:layout_constraintStart_toEndOf="@+id/ivMoviePoster"
+        app:layout_constraintTop_toBottomOf="@+id/tvSeasons" />
+
+    <ImageButton
+        android:id="@+id/btChats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:background="@null"
+        android:src="@drawable/icon_chat"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMoviePoster"
+        app:layout_constraintEnd_toStartOf="@+id/btPlus"
+        app:layout_constraintTop_toTopOf="@+id/ivMoviePoster" />
+
+    <ImageButton
+        android:id="@+id/btPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:background="@null"
+        android:src="@drawable/icon_plus"
+        app:layout_constraintBottom_toBottomOf="@+id/btChats"
+        app:layout_constraintEnd_toStartOf="@+id/btLike"
+        app:layout_constraintTop_toTopOf="@+id/btChats"
+        app:tint="@color/orange" />
+
+    <ImageButton
+        android:id="@+id/btLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:src="@drawable/icon_heart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/btPlus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btPlus" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="episodeFrame,tvEpisodeDescription,btLike,tvDescriptionHeader,btPlus,tvMovieName,btBack,ivMoviePoster,tvSeasons,tvEpisodeName,btChats,tvYear"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="281dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

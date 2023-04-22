@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_nav_graph"
+    app:startDestination="@id/movieDetailsFragment">
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.example.cinemalab.presentation.movie.moviedetailsscreen.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details">
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_episodeFragment"
+            app:destination="@id/episodeFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_messengerFragment2"
+            app:destination="@id/messengerFragment2"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeFragment"
+        android:name="com.example.cinemalab.presentation.movie.episodescreen.EpisodeFragment"
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode">
+        <argument
+            android:name="movieInfo"
+            app:argType="com.example.cinemalab.domain.model.MovieShortModel" />
+        <argument
+            android:name="episodeInfo"
+            app:argType="com.example.cinemalab.domain.model.EpisodeModel" />
+        <action
+            android:id="@+id/action_episodeFragment_to_messengerFragment2"
+            app:destination="@id/messengerFragment2"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/messengerFragment2"
+        android:name="com.example.cinemalab.presentation.chats.chat.ChatFragment"
+        android:label="fragment_messenger"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="chatInfo"
+            app:argType="com.example.cinemalab.domain.model.ShortChatInfoModel" />
+    </fragment>
+</navigation>

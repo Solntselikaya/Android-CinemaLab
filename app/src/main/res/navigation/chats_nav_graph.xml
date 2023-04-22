@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/discussion_nav_graph"
+    app:startDestination="@id/chatsListFragment">
+    <fragment
+        android:id="@+id/chatsListFragment"
+        android:name="com.example.cinemalab.presentation.chats.list.ChatsListFragment"
+        android:label="fragment_chats_list"
+        tools:layout="@layout/fragment_chats_list">
+        <action
+            android:id="@+id/action_chatsListFragment_to_messengerFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.cinemalab.presentation.chats.chat.ChatFragment"
+        android:label="fragment_messenger"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="chatInfo"
+            app:argType="com.example.cinemalab.domain.model.ShortChatInfoModel" />
+    </fragment>
+</navigation>

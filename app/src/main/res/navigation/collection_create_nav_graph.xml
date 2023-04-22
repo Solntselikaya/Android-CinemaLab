@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_create_nav_graph"
+    app:startDestination="@id/createCollectionFragment">
+
+    <fragment
+        android:id="@+id/createCollectionFragment"
+        android:name="com.example.cinemalab.presentation.collectionactions.create.createcollectionscreen.CreateCollectionFragment"
+        android:label="fragment_create_collection"
+        tools:layout="@layout/fragment_create_collection">
+        <action
+            android:id="@+id/action_createCollectionFragment_to_iconSelectFragment2"
+            app:destination="@id/iconSelectFragment"
+            app:launchSingleTop="true" />
+        <argument
+            android:name="iconId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/iconSelectFragment"
+        android:name="com.example.cinemalab.presentation.collectionactions.iconselectionscreen.IconSelectFragment"
+        android:label="fragment_icon_select"
+        tools:layout="@layout/fragment_icon_select" />
+</navigation>

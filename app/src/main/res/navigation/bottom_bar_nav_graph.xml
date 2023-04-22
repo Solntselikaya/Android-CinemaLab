@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_bar_nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.profilescreen.ProfileFragment"
+        android:label="Profile">
+        <action
+            android:id="@+id/action_profileFragment_to_chatsActivity2"
+            app:destination="@id/chatsActivity2"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionsFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.collectionsscreen.CollectionsFragment"
+        android:label="Collections">
+        <action
+            android:id="@+id/action_collectionsFragment_to_collectionCreateActivity"
+            app:destination="@id/collectionCreateActivity" />
+        <action
+            android:id="@+id/action_collectionsFragment_to_collectionEditActivity"
+            app:destination="@id/collectionEditActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/compilationFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.compilationscreen.CompilationFragment"
+        android:label="Compilation" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.cinemalab.presentation.bottomnav.mainscreen.MainFragment"
+        android:label="Main">
+        <action
+            android:id="@+id/action_mainFragment_to_movieActivity"
+            app:destination="@id/movieActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/collectionCreateActivity"
+        android:name="com.example.cinemalab.presentation.collectionactions.create.CollectionCreateActivity"
+        android:label="activity_collection_create"
+        tools:layout="@layout/activity_collection_create" />
+    <activity
+        android:id="@+id/movieActivity"
+        android:name="com.example.cinemalab.presentation.movie.MovieActivity"
+        android:label="activity_movie"
+        tools:layout="@layout/activity_movie">
+        <argument
+            android:name="movieInfo"
+            app:argType="com.example.cinemalab.domain.model.MovieModel" />
+        <argument
+            android:name="episodeId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </activity>
+    <activity
+        android:id="@+id/chatsActivity2"
+        android:name="com.example.cinemalab.presentation.chats.ChatsActivity"
+        android:label="activity_chats"
+        tools:layout="@layout/activity_chats" />
+    <activity
+        android:id="@+id/collectionEditActivity"
+        android:name="com.example.cinemalab.presentation.collectionactions.edit.CollectionEditActivity"
+        android:label="activity_collection_edit"
+        tools:layout="@layout/activity_collection_edit">
+        <argument
+            android:name="collectionInfo"
+            app:argType="com.example.cinemalab.domain.model.CollectionModel" />
+    </activity>
+</navigation>
