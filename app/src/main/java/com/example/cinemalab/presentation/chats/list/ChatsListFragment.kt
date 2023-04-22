@@ -103,7 +103,8 @@ class ChatsListFragment : Fragment() {
     }
 
     private fun navigateToChat(chatInfo: ShortChatInfoModel) {
-        val action = ChatsListFragmentDirections.actionChatsListFragmentToMessengerFragment(chatInfo)
+        val action =
+            ChatsListFragmentDirections.actionChatsListFragmentToMessengerFragment(chatInfo)
         findNavController().navigate(action)
     }
 

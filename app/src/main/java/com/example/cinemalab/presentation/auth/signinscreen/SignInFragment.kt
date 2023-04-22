@@ -97,7 +97,8 @@ class SignInFragment : Fragment() {
     }
 
     private fun navigateToSignUpScreen() {
-        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment(true)
+        findNavController().navigate(action)
     }
 
     private fun navigateToMainScreen() {

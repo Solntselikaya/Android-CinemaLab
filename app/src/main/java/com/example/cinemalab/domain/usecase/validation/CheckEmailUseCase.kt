@@ -11,13 +11,13 @@ class CheckEmailUseCase @Inject constructor(
 ) {
     operator fun invoke(email: String): String {
         val parsedEmail = email.split("@")
-        if (parsedEmail.size == 2){
+        if (parsedEmail.size == 2) {
             val name = email.split("@")[0]
             val domainName = email.split("@")[1]
             val nameValid = name.matches(Regex("^[^A-Z~!@#$%^&+-]+$"))
             val domainNameValid = domainName.matches(Regex("^[^A-Z~!@#$%^&+-]+$"))
 
-            if (email.let { Patterns.EMAIL_ADDRESS.matcher(it).matches()}
+            if (email.let { Patterns.EMAIL_ADDRESS.matcher(it).matches() }
                 && nameValid
                 && domainNameValid
             ) return ""

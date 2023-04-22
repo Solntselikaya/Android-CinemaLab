@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentChatBinding
 import com.example.cinemalab.domain.model.ChatElementModel
-import com.example.cinemalab.presentation.movie.MovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

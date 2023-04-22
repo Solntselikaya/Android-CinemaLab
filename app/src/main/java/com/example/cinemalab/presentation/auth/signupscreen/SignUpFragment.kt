@@ -11,13 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.cinemalab.R
 import com.example.cinemalab.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
+
+    private val args: SignUpFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentSignUpBinding
     private val viewModel: SignUpViewModel by viewModels()
@@ -49,11 +51,14 @@ class SignUpFragment : Fragment() {
                     navigateToMainScreen()
                 }
                 SignUpViewModel.SignUpState.Navigate -> {
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo(R.id.signInFragment, true)
-                        .build()
-                    val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
-                    findNavController().navigate(action, navOptions)
+                    if (!args.isFromSignIn) {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(R.id.signUpFragment, true)
+                            .build()
+                        val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
+                        findNavController().navigate(action, navOptions)
+                    }
+                    viewModel.setInitial()
                 }
             }
         }
@@ -92,22 +97,14 @@ class SignUpFragment : Fragment() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             val passwordRep = binding.etPasswordRepeat.text.toString()
-            viewModel.checkIfFieldsIsValid(
+
+            viewModel.register(
                 name,
                 surname,
                 email,
                 password,
                 passwordRep
             )
-
-            if (viewModel.allFieldsIsValid.value == true) {
-                viewModel.register(
-                    name,
-                    surname,
-                    email,
-                    password
-                )
-            }
         }
     }
 

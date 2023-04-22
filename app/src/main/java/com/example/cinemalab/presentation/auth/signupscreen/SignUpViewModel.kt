@@ -1,7 +1,6 @@
 package com.example.cinemalab.presentation.auth.signupscreen
 
 import android.content.Context
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +18,10 @@ import com.example.cinemalab.domain.usecase.storage.email.SaveUserEmailInStorage
 import com.example.cinemalab.domain.usecase.storage.firstrun.GetFirstRunFromStorageUseCase
 import com.example.cinemalab.domain.usecase.storage.firstrun.SaveFirstRunInStorageUseCase
 import com.example.cinemalab.domain.usecase.token.SaveTokenUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckEmailUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckEmptyFieldsUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckPasswordEqualsUseCase
+import com.example.cinemalab.domain.usecase.validation.CheckPasswordLengthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -32,7 +35,11 @@ class SignUpViewModel @Inject constructor(
     private val saveUserEmailInStorageUseCase: SaveUserEmailInStorageUseCase,
     private val addCollectionToDatabaseUseCase: AddCollectionToDatabaseUseCase,
     private val getFirstRunFromStorageUseCase: GetFirstRunFromStorageUseCase,
-    private val saveFirstRunInStorageUseCase: SaveFirstRunInStorageUseCase
+    private val saveFirstRunInStorageUseCase: SaveFirstRunInStorageUseCase,
+    private val checkEmptyFieldsUseCase: CheckEmptyFieldsUseCase,
+    private val checkEmailUseCase: CheckEmailUseCase,
+    private val checkPasswordLengthUseCase: CheckPasswordLengthUseCase,
+    private val checkPasswordEqualsUseCase: CheckPasswordEqualsUseCase
 ) : ViewModel() {
 
     sealed class SignUpState {
@@ -40,17 +47,13 @@ class SignUpViewModel @Inject constructor(
         object Loading : SignUpState()
         class Failure(val errorMessage: String) : SignUpState()
         class Success(val tokenResponse: AuthTokenPairDto) : SignUpState()
-        object Navigate: SignUpState()
+        object Navigate : SignUpState()
     }
 
     private val _state = MutableLiveData<SignUpState>(SignUpState.Initial)
     var state: LiveData<SignUpState> = _state
 
-    private val _allFieldsIsValid = MutableLiveData(true)
-    var allFieldsIsValid: LiveData<Boolean> = _allFieldsIsValid
-
     private val _validationErrorMessage = MutableLiveData("")
-    var validationErrorMessage: LiveData<String> = _validationErrorMessage
 
     init {
         checkIfFirstRun()
@@ -64,9 +67,13 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
+    fun setInitial() {
+        _state.value = SignUpState.Initial
+    }
+
     fun exitAlertDialog() {
         _validationErrorMessage.value = ""
-        _allFieldsIsValid.value = true
+        //_allFieldsIsValid.value = true
         _state.value = SignUpState.Initial
     }
 
@@ -77,56 +84,40 @@ class SignUpViewModel @Inject constructor(
         password: String,
         passwordRepeat: String
     ) {
-        _allFieldsIsValid.value =
-            isSomeFieldsEmpty(name, surname, email, password)
-                    && isEmailValid(email)
-                    && isPasswordValid(password, passwordRepeat)
+        _validationErrorMessage.value += checkEmptyFieldsUseCase(
+            name,
+            surname,
+            email,
+            password,
+            passwordRepeat
+        )
 
-        if (_allFieldsIsValid.value == false)
-            _state.value = SignUpState.Failure(_validationErrorMessage.value!!)
-    }
-
-    private fun isSomeFieldsEmpty(
-        name: String,
-        surname: String,
-        email: String,
-        password: String,
-    ): Boolean {
-        if (name.isBlank()
-            || surname.isBlank()
-            || email.isBlank()
-            || password.isBlank()
-        ) _validationErrorMessage.value += context.getString(R.string.fill_all_fields)
-
-        return name.isNotBlank()
-                && surname.isNotBlank()
-                && email.isNotBlank()
-                && password.isNotBlank()
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _validationErrorMessage.value += context.getString(R.string.invalid_email_error_message)
+        if (_validationErrorMessage.value?.isBlank() == true) {
+            _validationErrorMessage.value += checkEmailUseCase(email)
+            _validationErrorMessage.value += checkPasswordLengthUseCase(password)
+            _validationErrorMessage.value += checkPasswordEqualsUseCase(password, passwordRepeat)
         }
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun isPasswordValid(
-        password: String,
-        passwordRepeat: String
-    ): Boolean {
-        if (password != passwordRepeat) {
-            _validationErrorMessage.value += context.getString(R.string.passwords_are_not_equel)
-        }
-        return password == passwordRepeat
     }
 
     fun register(
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        passwordRepeat: String
     ) {
+
+        checkIfFieldsIsValid(
+            name,
+            surname,
+            email,
+            password,
+            passwordRepeat
+        )
+        if (_validationErrorMessage.value?.isNotBlank() == true) {
+            _state.value = SignUpState.Failure(_validationErrorMessage.value.toString())
+            return
+        }
 
         val body = RegistrationBodyDto(
             email = email,

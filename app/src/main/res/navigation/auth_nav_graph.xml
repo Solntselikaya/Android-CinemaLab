@@ -9,15 +9,12 @@
         android:name="com.example.cinemalab.presentation.auth.signinscreen.SignInFragment"
         android:label="SignInFragment">
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_signInFragment_to_bottomNavActivity2"
             app:destination="@id/bottomNavActivity2"
             app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -33,6 +30,10 @@
             android:id="@+id/action_signUpFragment_to_bottomNavActivity2"
             app:destination="@id/bottomNavActivity2"
             app:launchSingleTop="true" />
+        <argument
+            android:name="isFromSignIn"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <activity
         android:id="@+id/bottomNavActivity2"
