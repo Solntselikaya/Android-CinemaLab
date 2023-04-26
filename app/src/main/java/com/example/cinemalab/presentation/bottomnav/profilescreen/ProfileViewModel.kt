@@ -74,6 +74,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val email = getUserEmailFromStorageUseCase()
             deleteAllUserCollectionsFromDatabaseUseCase(email)
+            //token delete!
         }
     }
 }

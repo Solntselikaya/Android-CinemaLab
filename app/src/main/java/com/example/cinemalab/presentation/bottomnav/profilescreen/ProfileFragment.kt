@@ -75,13 +75,13 @@ class ProfileFragment : Fragment() {
             val data = result.data
 
             if (data?.data != null) {
+                //вот это можно вынести в дата слой (если очень хочется)
                 val fileUri = data.data
-                val file = File(fileUri?.path)
+                val file = File(fileUri?.path) //TODO: обработать null
                 viewModel.loadProfileImage(file)
-                binding.avatar.setImageURI(fileUri)
+                //binding.avatar.setImageURI(fileUri)
             }
             //binding.avatar.setImageURI(fileUri)
-
         }
 
     /*override fun onStart() {

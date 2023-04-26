@@ -57,6 +57,9 @@ class SignInFragment : Fragment() {
         binding.btRegistration.isEnabled = false
     }
 
+    //TODO: такие штуки не должны лежать в стейте, ибо если экран перевернут(он пересоздастся)
+    //TODO: то оно два раза покажется
+    //сделать класс который единожды отмечал бы что диалог надо вызвать
     private fun showErrorDialog(message: String) {
         binding.progressBar.isVisible = false
         val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)

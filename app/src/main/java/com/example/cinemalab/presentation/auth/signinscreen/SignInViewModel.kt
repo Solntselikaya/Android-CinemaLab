@@ -28,6 +28,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
+    //лучше контекст не хранить тут (если экран умрет то это станет memory leak)
+    //только ссылки на ресурсы
     @ApplicationContext private val context: Context,
     private val loginUseCase: LoginUseCase,
     private val getCollectionsUseCase: GetCollectionsUseCase,
@@ -40,6 +42,8 @@ class SignInViewModel @Inject constructor(
     private val checkEmptyFieldsUseCase: CheckEmptyFieldsUseCase
 ) : ViewModel() {
 
+    //лучше вынести в отдельный файл
+    //еслиб только тут использовались - то норм
     sealed class SignInState {
         object Initial : SignInState()
         object Loading : SignInState()
@@ -65,7 +69,7 @@ class SignInViewModel @Inject constructor(
 
         if (_validationErrorMessage.value?.isBlank() == true) {
             _validationErrorMessage.value += checkEmailUseCase(email)
-            _validationErrorMessage.value += checkPasswordLengthUseCase(password)
+            //_validationErrorMessage.value += checkPasswordLengthUseCase(password)
         }
     }
 

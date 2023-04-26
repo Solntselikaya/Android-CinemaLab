@@ -6,6 +6,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class CheckEmptyFieldsUseCase @Inject constructor(
+    //контекста тут тоже не должно быть
+    //никакого андроида!!
     @ApplicationContext private val context: Context
 ) {
 

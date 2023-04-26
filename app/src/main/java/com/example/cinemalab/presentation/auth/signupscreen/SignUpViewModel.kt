@@ -151,6 +151,7 @@ class SignUpViewModel @Inject constructor(
             } catch (ex: Exception) {
                 _state.value = SignUpState.Failure(
                     when (ex.message) {
+                        //статус-коды на экране не показываются, тч выносить не надо
                         context.getString(R.string.exception_http_409) -> context.getString(R.string.error_user_already_exists)
                         else -> context.getString(R.string.error_something_went_wrong)
                     }

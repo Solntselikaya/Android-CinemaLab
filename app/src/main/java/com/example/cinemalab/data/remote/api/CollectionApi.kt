@@ -39,7 +39,6 @@ interface CollectionApi {
         @Body movieId: MovieIdDto
     )
 
-    // тут бади или квери??????
     @DELETE("collections/{collectionId}/movies")
     suspend fun deleteMovieFromCollection(
         @Header("Authorization") token: String,

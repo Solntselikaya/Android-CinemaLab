@@ -33,7 +33,9 @@ class MainFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         binding = FragmentMainBinding.bind(view)
 
-        val stateObserver = Observer<MainViewModel.MainState> { newState ->
+        //val stateObserver = Observer<MainViewModel.MainState> {}
+        //вынести метод отсюда в отдельный чтобы не засорять метод жизненного цикла
+        viewModel.state.observe(viewLifecycleOwner) { newState ->
             when (newState) {
                 MainViewModel.MainState.Initial -> hideLoading()
                 MainViewModel.MainState.Loading -> showLoading()
@@ -59,7 +61,6 @@ class MainFragment : Fragment() {
                 }
             }
         }
-        viewModel.state.observe(viewLifecycleOwner, stateObserver)
 
         return binding.root
     }

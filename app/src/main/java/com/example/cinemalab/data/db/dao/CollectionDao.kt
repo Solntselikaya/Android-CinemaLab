@@ -14,7 +14,7 @@ interface CollectionDao {
     suspend fun updateCollection(collection: CollectionEntity)
 
     @Query("SELECT * FROM $DATABASE_NAME WHERE user_id = :userId")
-    fun getAllForUser(userId: String): List<CollectionEntity>
+    suspend fun getAllForUser(userId: String): List<CollectionEntity>
 
     @Query("DELETE FROM $DATABASE_NAME WHERE collection_id = :collectionId")
     suspend fun delete(collectionId: String)

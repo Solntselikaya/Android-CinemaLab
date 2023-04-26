@@ -37,6 +37,8 @@ class MovieDetailsFragment : Fragment() {
         fun onMovieDetailsBackPressed()
     }
 
+    //фрагмент глупый и простой
+    //так что все переменные (тк состояние экрана) должны быть в VM
     private var movieInfo: MovieModel? = null
     private var episodeId: String? = null
 

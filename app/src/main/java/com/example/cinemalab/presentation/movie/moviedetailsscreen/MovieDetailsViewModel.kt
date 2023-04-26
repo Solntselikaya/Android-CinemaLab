@@ -32,6 +32,9 @@ class MovieDetailsViewModel @Inject constructor(
     private val _state = MutableLiveData<MovieDetailsState>(MovieDetailsState.Initial)
     var state: LiveData<MovieDetailsState> = _state
 
+    //в библиотеке можно как-то прокинуть сразу во вью-модель аргументы
+    //чтобы достать их
+    //не прокидывая через фрагмент
     fun getMovieEpisodes(
         movieId: String,
         episodeId: String?

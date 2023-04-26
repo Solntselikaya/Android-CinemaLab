@@ -60,6 +60,8 @@ class EpisodeViewModel @Inject constructor(
     ) {
         _state.value = EpisodeState.Loading
 
+        //тут поток не надо менять
+        //юзкейс!
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val collections = getUserCollectionsFromDatabaseUseCase()

@@ -21,6 +21,7 @@ class PostUserAvatarUseCase @Inject constructor(
 
         val bearerToken = "Bearer ${token.accessToken}"
 
+        //TODO: конвертить через битмапу в конкретный тип/обработать разные форматы картинок
         val body = image.asRequestBody("image/png".toMediaType())
         val filePart = MultipartBody.Part.createFormData("file", "image.png", body)
 
